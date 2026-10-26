@@ -35,4 +35,4 @@ The final hosted browser smoke passed on the fresh-call greeting build (runtime 
 - Backend regression: 100 pytest passed across SQLite/Postgres, Ruff passed, Mypy passed.
 - Design detector: no findings. Independent finish-review final disposition: **ship**, with both original findings resolved (local transcript scrolling and visible typed fallback).
 - Updated desktop/mobile screenshots cover reception and the dedicated appointments view. The silent recording shows the new interface.
-- Public deployment of this new UI is pending Render's next deployment; the earlier hosted verification above applies to the preceding runtime. Final real-microphone/voice-quality and optional live Groq checks remain separate.
+- Public deployment verified on Render runtime commit `591f3f1`: expected `index-CWcEv-oe.js` fingerprint confirmed, then the complete real-browser smoke passed on HTTPS, including new appointment navigation/actions, desktop/mobile layout, and no page errors. Final real-microphone/voice-quality and optional live Groq checks remain separate.
