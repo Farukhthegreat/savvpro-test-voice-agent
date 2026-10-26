@@ -2,6 +2,8 @@
 
 A vehicle-service receptionist that **books, reschedules, and cancels appointments through English speech**. Its brain is explicit Python rules and a state machine—**no runtime LLM decisions**. React shows the actual extracted details, state changes, availability checks, and committed actions.
 
+**Live demo:** https://savvpro-test-voice-agent.onrender.com · **Submission:** https://github.com/savvpro/savvpro-test-voice-agent/pull/3
+
 Each browser gets an isolated, fictional two-bay workshop, occupied test slots, and an existing appointment for **Alex Rivera — SUV — Tyre Rotation — next open day at 11 AM**. No real personal details are needed.
 
 ![Bayline reception running with a real seeded demo appointment](docs/images/reception-desktop.png)

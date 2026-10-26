@@ -266,7 +266,12 @@ export default function App() {
     if (!session) return
     setError(null)
     setCallStarted(true)
-    voice.current?.start(session.state.last_reply ?? session.welcome)
+    const resumeDraft = ['COLLECTING', 'CONFIRMING', 'SELECTING_APPOINTMENT'].includes(
+      session.state.phase ?? '',
+    )
+    voice.current?.start(
+      resumeDraft ? (session.state.last_reply ?? session.welcome) : session.welcome,
+    )
   }
   const endCall = () => {
     voice.current?.end()

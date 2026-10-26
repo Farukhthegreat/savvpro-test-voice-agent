@@ -53,4 +53,4 @@ PASS: cancellation releases capacity; a fresh API read recovers the committed bo
 PASS: isolated demo reset restores initial fixtures on Neon.
 ```
 
-All workflow data is synthetic. Verification used the real Neon database and an actual HTTP client, not provider mocks. Render hosting still requires importing the environment variables, deploying the latest candidate commit, and verifying the resulting public URL.
+All workflow data is synthetic. Verification used the real Neon database and an actual HTTP client, not provider mocks. The same verification subsequently passed against the hosted API at https://savvpro-test-voice-agent.onrender.com. A real browser smoke also passed there for booking, alternatives, selection, rescheduling, cancellation, reset, and desktop/mobile rendering. Deploy the latest candidate commit for all final refinements.

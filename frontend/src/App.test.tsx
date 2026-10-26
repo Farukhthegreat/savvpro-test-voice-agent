@@ -110,3 +110,31 @@ it('formats midnight, noon, and afternoon without timezone conversion', () => {
   expect(prettyTime('12:30')).toBe('12:30 PM')
   expect(prettyTime('17:30')).toBe('5:30 PM')
 })
+
+it('starts a fresh call with a greeting after a previous call ended', async () => {
+  const speak = vi.fn()
+  vi.stubGlobal('speechSynthesis', { cancel: vi.fn(), getVoices: () => [], speak })
+  vi.stubGlobal(
+    'SpeechSynthesisUtterance',
+    class {
+      text: string
+      constructor(text: string) {
+        this.text = text
+      }
+    },
+  )
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string) => ({
+      ok: true,
+      json: async () =>
+        url === '/api/capabilities'
+          ? { server_stt: false, services: {}, timezone: 'Asia/Karachi' }
+          : { ...session, state: { phase: 'ENDED', last_reply: 'Goodbye.' } },
+    })),
+  )
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.click(screen.getByRole('button', { name: /Start a call/ }))
+  expect(speak.mock.calls[0][0].text).toBe('Welcome to Bayline.')
+})
