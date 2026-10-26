@@ -21,7 +21,7 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 - Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
 - Neon production branch linked/deployed and real API/database workflow verified. Required PR opened: https://github.com/savvpro/savvpro-test-voice-agent/pull/3.
 - Public Render app verified: https://savvpro-test-voice-agent.onrender.com. Hosted browser workflows and actual Neon records pass; HTTPS/session cookie checks pass.
-- Latest runtime deployment 7b01b76 confirmed by candidate and public asset fingerprint; final hosted browser smoke passes.
+- Current runtime aa1c645 is deployed and its hosted workflow/reveal checks pass; the candidate confirms spoken chip replies and progressive text in Chrome.
 - Remaining human check: final hosted microphone/cadence preference. Optional Groq remains unconfigured and is not claimed as live-verified. Evidence and submission are updated.
 - Hosting: original Render workspace suspended; Railway signup unavailable. Candidate is configuring an available Google-login Render account using the public candidate branch. GitHub-hosted Actions cannot start because of an account billing lock; equivalent Linux-container checks are recorded separately.
 
@@ -29,4 +29,4 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 
 Black/charcoal and brass gold replace the white/blue world. SVG icons and favicon, self-hosted Manrope, service shortcuts, visible mobile navigation, and a dedicated appointments view are implemented. Appointment actions pass the selected reference through the same deterministic confirmation flow. Initial transcript scrolling remains local, and Type instead exposes the non-microphone path. Desktop/mobile real-Neon workflows and 16 frontend tests pass; the fresh finish-review disposition is ship. Revision `591f3f1` is pushed and automatically deployed by Render. Its new asset fingerprint and complete hosted browser workflow pass; the new UI is public.
 
-Test-drive playback/reveal: UI turns now speak outside microphone calls, late playback is generation-guarded, playback failures expose replay recovery, and new actual text has a bounded reduced-motion-safe word reveal. Runtime `aa1c645` is deployed; its fingerprint and hosted appointment/reveal/reduced-motion smoke pass. Audible output still needs live Chrome.
+Test-drive playback/reveal: UI turns now speak outside microphone calls, late playback is generation-guarded, playback failures expose replay recovery, and new actual text has a bounded reduced-motion-safe word reveal. Runtime `aa1c645` is deployed; its fingerprint and hosted appointment/reveal/reduced-motion smoke pass. The candidate confirms audible one-shot replies and progressive text in desktop Chrome.

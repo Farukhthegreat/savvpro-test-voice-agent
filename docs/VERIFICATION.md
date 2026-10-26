@@ -43,5 +43,10 @@ The final hosted browser smoke passed on the fresh-call greeting build (runtime 
 - Frontend: 25 Vitest tests pass; TypeScript and production build pass. Existing 100-test backend result remains applicable; backend code is unchanged.
 - Tests cover one-shot playback without an active call, delayed-response suppression after navigation, blocked or never-started synthesis, paused-engine recovery, microphone-free replay, text preservation, and recognition corrections.
 - Local real-Neon browser smoke passes real API quick replies, actual word-reveal CSS, reduced-motion suppression, and bringing the conversation into view, alongside existing appointment workflows.
-- Design detector reports no findings. Real audible playback still needs the candidate's live Chrome check; browser/API checks are not evidence of actual speaker output.
-- Render runtime `aa1c645` is verified live with `index-DsBcEA4J.js` and `index-Cy1OtG5b.css`. Hosted browser smoke passes all appointment workflows, quick replies, conversation visibility, word-reveal CSS, reduced-motion suppression, and desktop/mobile navigation, with no page JavaScript errors. Verified 2026-10-26 21:21 PKT. Audible Chrome output remains a separate candidate check.
+- Design detector reports no findings. Candidate subsequently confirmed audible one-shot playback in desktop Chrome; browser/API checks alone are not evidence of actual speaker output.
+- Render runtime `aa1c645` is verified live with `index-DsBcEA4J.js` and `index-Cy1OtG5b.css`. Hosted browser smoke passes all appointment workflows, quick replies, conversation visibility, word-reveal CSS, reduced-motion suppression, and desktop/mobile navigation, with no page JavaScript errors. Verified 2026-10-26 21:21 PKT. Candidate subsequently confirmed audible Chrome output and progressive text reveal.
+
+
+## Candidate confirmation - 2026-10-26 21:26 PKT
+
+The candidate answered "Yes, both work" after refreshing the public app in desktop Chrome and clicking "What time do you close?" without starting a call: the reply was audible and its words revealed progressively. This confirms the reported test-drive playback/animation fix on the candidate's device. It does not establish optional Groq verification or a new end-to-end microphone workflow check.
