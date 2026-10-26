@@ -1,5 +1,7 @@
 # AI assistance and evidence
 
+**Candidate:** Farrukh Yousaf
+
 AI assistance was used throughout this assessment. **No language model participates in runtime application decisions.** The candidate chose the vehicle-service use case, free-service constraint, English language, hands-free interaction, isolated demos, mandatory architecture refinements, and approved the interface composition.
 
 ## Tools and contribution

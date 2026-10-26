@@ -1,5 +1,7 @@
 ﻿# Bayline · Voice Service Reception
 
+**Candidate:** Farrukh Yousaf | **GitHub:** [Farukhthegreat](https://github.com/Farukhthegreat)
+
 A vehicle-service receptionist that **books, reschedules, and cancels appointments through English speech**. Its brain is explicit Python rules and a state machine—**no runtime LLM decisions**. React shows the actual extracted details, state changes, availability checks, and committed actions.
 
 **Live demo:** https://savvpro-test-voice-agent.onrender.com · **Submission:** https://github.com/savvpro/savvpro-test-voice-agent/pull/3
@@ -8,7 +10,7 @@ Each browser gets an isolated, fictional two-bay workshop, occupied test slots, 
 
 ![Bayline reception running with a real seeded demo appointment](docs/images/reception-desktop.png)
 
-[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png) ? [Appointments page](docs/images/appointments-desktop.png) ? [Confirmed update](docs/images/appointments-updated-desktop.png)
+[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png) | [Appointments page](docs/images/appointments-desktop.png) | [Confirmed update](docs/images/appointments-updated-desktop.png)
 
 ## Run locally
 

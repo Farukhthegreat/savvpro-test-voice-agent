@@ -58,3 +58,8 @@ The candidate answered "Yes, both work" after refreshing the public app in deskt
 - Desktop smoke checks the rescheduled reference/new time, removal of the cancelled reference, and the active count without reload. Mobile smoke confirms a reschedule and checks the new slot and no horizontal overflow.
 - Added actual-data status feedback near the conversation and on the appointments page; fixed handled-anchor default navigation racing with rapid view changes. Backend code and transactional confirmation semantics are unchanged.
 - Render runtime `ca00faf` is verified by `index-DkCzAz4C.js` / `index-Ba2ckjh3.css`. Complete hosted browser checks pass, including immediate reschedule/cancel notices, updated times/list/counts without reload, mobile confirmed rescheduling, no overflow, and no page errors. Desktop/mobile updated-schedule captures were visually checked. Verified 2026-10-26 21:46 PKT.
+
+
+## Known cosmetic limitation
+
+A read-only live-browser probe with 15 conversation turns reproduced extra scroll space below the footer on desktop and mobile. The candidate reviewed the concern and the footer was left unchanged. This is separate from the passing appointment workflows and horizontal-overflow checks above.
