@@ -33,8 +33,9 @@ import type { Appointment, Capabilities, DecisionTrace, SessionData, TurnResult 
 import { browserSpeechAvailable, englishVoices, VoiceController } from './voice'
 import type { SpeechMode, VoiceStatus } from './voice'
 import './styles.css'
+import { TranscriptText } from './TranscriptText'
 
-type Message = { role: 'caller' | 'assistant'; text: string }
+type Message = { role: 'caller' | 'assistant'; text: string; animate?: boolean }
 const quickTests = [
   { label: 'Try a fully booked time', text: 'Book a brake inspection for my SUV tomorrow at 2 PM' },
   { label: 'Change details mid-call', text: 'Actually make that Tuesday at 11 AM' },
@@ -108,6 +109,7 @@ export default function App() {
   const voice = useRef<VoiceController | null>(null)
   const sendRef = useRef<(text: string) => void>(() => undefined)
   const transcriptBottom = useRef<HTMLDivElement>(null)
+  const conversationHeading = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
     const changeView = () => {
@@ -123,6 +125,9 @@ export default function App() {
   useEffect(() => {
     document.title =
       view === 'appointments' ? 'Your appointments — Bayline' : 'Bayline — Service reception'
+    if (view === 'appointments') {
+      setMessages((items) => items.map((message) => ({ ...message, animate: false })))
+    }
     if (initialView.current) {
       initialView.current = false
       return
@@ -203,14 +208,15 @@ export default function App() {
       pending.current = true
       setBusy(true)
       setError(null)
-      voice.current?.processing()
+      const playbackGeneration = voice.current?.processing()
       const generation = epoch.current
       const payload =
         isRetry && pendingTurn.current
           ? pendingTurn.current
           : { text: text.trim(), revision: current.revision, turn_id: crypto.randomUUID() }
       pendingTurn.current = payload
-      if (!isRetry) setMessages((items) => [...items, { role: 'caller', text: payload.text }])
+      if (!isRetry)
+        setMessages((items) => [...items, { role: 'caller', text: payload.text, animate: true }])
       setInput('')
       try {
         const result = await api<TurnResult>('/api/turn', payload)
@@ -223,16 +229,15 @@ export default function App() {
         }
         sessionRef.current = updated
         setSession(updated)
-        setMessages((items) => [...items, { role: 'assistant', text: result.reply }])
+        setMessages((items) => [...items, { role: 'assistant', text: result.reply, animate: true }])
         setTrace(result.trace)
         setRetry(false)
         pendingTurn.current = null
         if (result.trace.action === 'end_call') {
           setCallStarted(false)
-          voice.current?.speak(result.reply, false)
+          voice.current?.speak(result.reply, false, playbackGeneration)
           if (voice.current) voice.current.active = false
-        } else if (voice.current?.active) voice.current.speak(result.reply)
-        else voice.current?.end()
+        } else voice.current?.speak(result.reply, voice.current.active, playbackGeneration)
       } catch (problem) {
         if (generation !== epoch.current) return
         voice.current?.pause()
@@ -730,10 +735,16 @@ export default function App() {
                 </div>
 
                 <div className="conversation-heading">
-                  <h2>Conversation</h2>
+                  <h2 ref={conversationHeading} tabIndex={-1}>
+                    Conversation
+                  </h2>
                   <span className="live-caption">
                     <span />
-                    {callStarted ? 'Live transcript' : 'Ready for your first request'}
+                    {callStarted
+                      ? 'Live transcript'
+                      : messages.length > 1
+                        ? 'Conversation transcript'
+                        : 'Ready for your first request'}
                   </span>
                   <button
                     className="icon-button"
@@ -744,6 +755,16 @@ export default function App() {
                   >
                     <Volume2 size={16} />
                   </button>
+                  {status === 'speaking' && !callStarted && (
+                    <button
+                      className="icon-button stop-reply"
+                      aria-label="Stop reply"
+                      title="Stop reply"
+                      onClick={() => voice.current?.interrupt()}
+                    >
+                      <Square size={15} />
+                    </button>
+                  )}
                 </div>
                 <div
                   className="transcript"
@@ -767,7 +788,9 @@ export default function App() {
                           <span className="message-name">
                             {message.role === 'caller' ? 'You' : 'Bayline'}
                           </span>
-                          <p>{message.text}</p>
+                          <p>
+                            <TranscriptText text={message.text} animate={message.animate} />
+                          </p>
                         </div>
                         {index === messages.length - 1 && message.role === 'assistant' && (
                           <Check
@@ -780,9 +803,9 @@ export default function App() {
                     ))
                   )}
                   {interim && (
-                    <div className="interim">
+                    <div className="interim" aria-live="off">
                       <Mic size={13} />
-                      {interim}
+                      <TranscriptText text={interim} animate live />
                     </div>
                   )}
                   {busy && (
@@ -1034,7 +1057,16 @@ export default function App() {
                     className="quick-chip"
                     disabled={Boolean(disabled)}
                     title={item.label}
-                    onClick={() => void send(item.text)}
+                    onClick={() => {
+                      void send(item.text)
+                      conversationHeading.current?.focus({ preventScroll: true })
+                      conversationHeading.current?.scrollIntoView?.({
+                        behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+                          ? 'instant'
+                          : 'smooth',
+                        block: 'center',
+                      })
+                    }}
                   >
                     <span>{item.text}</span>
                     <ArrowRight size={15} />

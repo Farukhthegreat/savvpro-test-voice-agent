@@ -98,6 +98,7 @@ export class VoiceController {
   private timer: number | undefined
   private meter: number | undefined
   private upload: AbortController | null = null
+  private utterance: SpeechSynthesisUtterance | null = null
   private callbacks: Callbacks
 
   constructor(callbacks: Callbacks) {
@@ -108,6 +109,12 @@ export class VoiceController {
     const generation = ++this.generation
     clearTimeout(this.timer)
     clearInterval(this.meter)
+    if (this.utterance) {
+      this.utterance.onstart = null
+      this.utterance.onend = null
+      this.utterance.onerror = null
+      this.utterance = null
+    }
     this.upload?.abort()
     this.upload = null
     if (this.recognition) {
@@ -170,16 +177,19 @@ export class VoiceController {
     }
   }
 
-  processing(): void {
-    this.clear()
+  processing(): number {
+    const generation = this.clear()
     this.callbacks.status('processing')
+    return generation
   }
 
   stopRecording(): void {
     if (this.recorder?.state === 'recording') this.recorder.stop()
   }
 
-  speak(reply: string, listenAfter = true): void {
+  speak(reply: string, listenAfter = true, expectedGeneration?: number): void {
+    if (expectedGeneration !== undefined && expectedGeneration !== this.generation) return
+    if (!listenAfter) this.active = false
     const generation = this.clear()
     const chunks = chunkReply(reply)
     if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
@@ -196,6 +206,8 @@ export class VoiceController {
         return
       }
       const utterance = new SpeechSynthesisUtterance(chunk)
+      // Keep the current utterance alive until completion or explicit cancellation.
+      this.utterance = utterance
       utterance.lang = 'en-US'
       utterance.rate = 1
       const voices = englishVoices()
@@ -203,21 +215,48 @@ export class VoiceController {
         voices.find((voice) => voice.voiceURI === this.voiceURI) ?? voices[0] ?? null
       if (utterance.voice) utterance.lang = utterance.voice.lang
       let finished = false
+      let started = false
+      utterance.onstart = () => {
+        started = true
+      }
       const finish = (timedOut = false) => {
         if (finished || generation !== this.generation) return
         finished = true
         clearTimeout(this.timer)
         utterance.onend = null
         utterance.onerror = null
+        utterance.onstart = null
+        this.utterance = null
+        if (timedOut && !started) {
+          this.fail(
+            'Speech playback did not start. Click Replay last reply to try again, or continue with text.',
+          )
+          return
+        }
         if (timedOut) window.speechSynthesis.cancel()
         this.timer = window.setTimeout(next, 0)
       }
       utterance.onend = () => finish()
-      utterance.onerror = () => finish()
+      utterance.onerror = (event) => {
+        if (finished || generation !== this.generation) return
+        finished = true
+        this.fail(
+          event.error === 'not-allowed'
+            ? 'Your browser blocked speech playback. Click Replay last reply to try again, or continue with text.'
+            : 'Speech playback failed. Click Replay last reply to try again, or continue with text.',
+        )
+      }
       this.timer = window.setTimeout(() => finish(true), watchdogMs(chunk))
       // Flush before every chunk; stale callbacks are detached and generation-guarded.
       window.speechSynthesis.cancel()
-      window.speechSynthesis.speak(utterance)
+      try {
+        if (window.speechSynthesis.paused) window.speechSynthesis.resume()
+        window.speechSynthesis.speak(utterance)
+      } catch {
+        this.fail(
+          'Speech playback failed. Click Replay last reply to try again, or continue with text.',
+        )
+      }
     }
     next()
   }

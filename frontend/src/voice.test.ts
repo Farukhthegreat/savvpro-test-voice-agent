@@ -74,9 +74,18 @@ describe('synthesis completion guards', () => {
 
   it('recovers when onend never fires, once', () => {
     controller.speak('A short reply.', false)
+    utterances[0].onstart?.({} as SpeechSynthesisEvent)
     vi.advanceTimersByTime(12050)
     expect(callbacks.status).toHaveBeenLastCalledWith('idle')
     expect(window.speechSynthesis.cancel).toHaveBeenCalled()
+    expect(utterances).toHaveLength(1)
+  })
+
+  it('surfaces a silent engine that never starts or emits an error', () => {
+    controller.speak('A short reply.', false)
+    vi.advanceTimersByTime(12050)
+    expect(callbacks.error).toHaveBeenCalledWith(expect.stringContaining('did not start'))
+    expect(callbacks.status).toHaveBeenLastCalledWith('paused')
     expect(utterances).toHaveLength(1)
   })
 
@@ -96,6 +105,42 @@ describe('synthesis completion guards', () => {
     oldEnd()
     vi.advanceTimersByTime(15000)
     expect(utterances).toHaveLength(1)
+    expect(callbacks.status).toHaveBeenLastCalledWith('idle')
+  })
+
+  it('does not play a delayed reply after pause or navigation invalidates its turn', () => {
+    const generation = controller.processing()
+    controller.pause()
+    controller.speak('A delayed API reply.', false, generation)
+    expect(utterances).toHaveLength(0)
+    expect(callbacks.status).toHaveBeenLastCalledWith('paused')
+  })
+
+  it('reports blocked playback instead of silently discarding the reply', () => {
+    controller.speak('Please confirm this booking.', false)
+    utterances[0].onerror?.({ error: 'not-allowed' } as SpeechSynthesisErrorEvent)
+    expect(callbacks.error).toHaveBeenCalledWith(expect.stringContaining('browser blocked speech'))
+    expect(callbacks.status).toHaveBeenLastCalledWith('paused')
+    vi.advanceTimersByTime(15000)
+    expect(utterances).toHaveLength(1)
+    controller.speak('Please confirm this booking.', false)
+    expect(utterances).toHaveLength(2)
+  })
+
+  it('resumes a paused browser synthesis engine before playback', () => {
+    const resume = vi.fn()
+    Object.assign(window.speechSynthesis, { paused: true, resume })
+    controller.speak('Hello.', false)
+    expect(resume).toHaveBeenCalledOnce()
+    expect(utterances).toHaveLength(1)
+  })
+
+  it('keeps one-shot replay separate from an active microphone call', () => {
+    controller.active = true
+    controller.speak('A preview reply.', false)
+    expect(controller.active).toBe(false)
+    utterances[0].onend?.({} as SpeechSynthesisEvent)
+    vi.advanceTimersByTime(50)
     expect(callbacks.status).toHaveBeenLastCalledWith('idle')
   })
 })

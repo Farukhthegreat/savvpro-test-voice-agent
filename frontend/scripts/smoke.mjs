@@ -81,6 +81,17 @@ try {
   expect((await reset).status()).toBe(200)
   await expect(page.getByText('11:00 AM', { exact: true })).toBeVisible()
 
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  const quickReply = page.waitForResponse((response) => response.url().endsWith('/api/turn'))
+  await page.getByRole('button', { name: 'What time do you close?' }).click()
+  const quickResult = await (await quickReply).json()
+  await expect(page.getByRole('heading', { name: 'Conversation', exact: true })).toBeInViewport()
+  const reply = page.locator('.message.assistant').last()
+  await expect(reply.locator('.sr-only')).toHaveText(quickResult.reply)
+  await expect(reply.locator('.revealed-word').last()).toHaveCSS('animation-name', 'reveal-word')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(reply.locator('.revealed-word').last()).toHaveCSS('animation-name', 'none')
+
   const mobile = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
@@ -115,7 +126,7 @@ try {
   await mobile.close()
   expect(errors).toEqual([])
   console.log(
-    'PASS: booking, alternatives, selection, rescheduling, cancellation via appointments page, reset, desktop/mobile navigation and rendering; no page errors.',
+    'PASS: booking, alternatives, selection, rescheduling, cancellation via appointments page, reset, quick replies, text reveal/reduced motion, desktop/mobile navigation and rendering; no page errors.',
   )
 } finally {
   await context.close()

@@ -259,3 +259,70 @@ it('starts a fresh call with a greeting after a previous call ended', async () =
   fireEvent.click(screen.getByRole('button', { name: /Start a call/ }))
   expect(speak.mock.calls[0][0].text).toBe('Welcome to Bayline.')
 })
+
+it('speaks a quick-test reply without requiring a call and offers stop playback', async () => {
+  const speak = vi.fn()
+  const cancel = vi.fn()
+  vi.stubGlobal('speechSynthesis', { cancel, getVoices: () => [], speak })
+  vi.stubGlobal(
+    'SpeechSynthesisUtterance',
+    class {
+      text: string
+      constructor(text: string) {
+        this.text = text
+      }
+    },
+  )
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.click(screen.getByRole('button', { name: /What time do you close/ }))
+  await waitFor(() => expect(speak).toHaveBeenCalledOnce())
+  expect(speak.mock.calls[0][0].text).toBe('Which service?')
+  expect(screen.queryByRole('button', { name: 'End call' })).not.toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: 'Stop reply' }))
+  expect(screen.queryByRole('button', { name: 'Stop reply' })).not.toBeInTheDocument()
+  expect(cancel).toHaveBeenCalled()
+})
+
+it('keeps a delayed API reply silent after navigating away from reception', async () => {
+  const speak = vi.fn()
+  vi.stubGlobal('speechSynthesis', { cancel: vi.fn(), getVoices: () => [], speak })
+  vi.stubGlobal(
+    'SpeechSynthesisUtterance',
+    class {
+      text: string
+      constructor(text: string) {
+        this.text = text
+      }
+    },
+  )
+  let resolveTurn!: (value: unknown) => void
+  const pending = new Promise((resolve) => {
+    resolveTurn = resolve
+  })
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string) => ({
+      ok: true,
+      json: async () =>
+        url === '/api/capabilities'
+          ? { server_stt: false, services: {}, timezone: 'Asia/Karachi' }
+          : url === '/api/turn'
+            ? await pending
+            : session,
+    })),
+  )
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.click(screen.getByRole('button', { name: /What time do you close/ }))
+  fireEvent.click(screen.getByRole('link', { name: /Your appointments/ }))
+  resolveTurn({
+    revision: 1,
+    state: {},
+    appointments: [appointment],
+    reply: 'We close at six.',
+    trace,
+  })
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Reschedule' })).toBeEnabled())
+  expect(speak).not.toHaveBeenCalled()
+})

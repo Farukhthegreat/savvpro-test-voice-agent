@@ -179,6 +179,8 @@ Reception and Your appointments are actual hash-navigable views. The active link
 
 ### Voice stage and decision inspector
 
+Fresh conversation text reveals with 180ms word fades and delays capped at 600ms; live recognition changes use 100ms fades. These are visual presentations of actual text, not generated-token streaming. Assistive technology receives the complete text once, and reduced motion disables the reveal. Test-drive chips bring the conversation into view; history remains immediate on session initialization.
+
 The waveform illustrates controller status rather than measured audio amplitude. Bars animate only while listening or speaking; text carries the actual status. Reduced-motion preferences suppress animation and smooth scrolling. The native disclosure shows the actual state, matched rules, entities, validation, action, and revision, with an honest empty state before a request.
 
 ## Do's and Don'ts

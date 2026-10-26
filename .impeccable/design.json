@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T15:40:07.965366Z",
+  "generatedAt": "2026-10-26T16:17:44.946623+00:00",
   "title": "Design System: Bayline Service Reception",
   "extensions": {
     "colorMeta": {
@@ -203,6 +203,11 @@
         "name": "waveform",
         "value": "0.85s ease-in-out infinite alternate",
         "purpose": "Illustrative bars only while listening or speaking."
+      },
+      {
+        "name": "transcript-word-reveal",
+        "value": "180ms word fade; delay <=600ms; 100ms live recognition fade",
+        "purpose": "Reveal actual new response and recognition text; no delay for reduced motion or initial history."
       },
       {
         "name": "reduced-motion",
