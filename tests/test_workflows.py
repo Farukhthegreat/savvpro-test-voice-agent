@@ -61,6 +61,15 @@ def test_overrun_rejected(client: TestClient) -> None:
     assert "time" not in result["state"]["slots"]
 
 
+def test_spoken_number_selects_alternative_not_clock_time(client: TestClient) -> None:
+    start(client)
+    proposed = turn(client, "Book a brake inspection for my SUV tomorrow at 2 PM")
+    alternative = proposed["state"]["alternatives"][1]
+    result = turn(client, "option two")
+    assert result["state"]["slots"]["time"] == alternative["time"]
+    assert result["state"]["slots"]["date"] == alternative["date"]
+
+
 def test_correction_invalidates_confirmation(client: TestClient) -> None:
     start(client)
     turn(client, "Book an oil change for my car tomorrow at 10 AM")
@@ -131,6 +140,16 @@ def test_multi_appointment_selection(client: TestClient) -> None:
     result = turn(client, "yes")
     assert len(result["appointments"]) == 1
     assert result["appointments"][0]["service"] == "tyre_rotation"
+
+
+def test_spoken_number_identifies_appointment(client: TestClient) -> None:
+    start(client)
+    turn(client, "Book an oil change for my car Thursday at 10 AM")
+    turn(client, "yes")
+    turn(client, "reschedule my appointment")
+    selected = turn(client, "number two")
+    assert "Oil Change" in selected["reply"]
+    assert selected["state"]["needs_new_schedule"] is True
 
 
 def test_multi_appointment_reschedule_preserves_proposal(client: TestClient) -> None:

@@ -4,7 +4,7 @@ Date: 26 October 2026 (PKT). Update this record from actual runs before submissi
 
 | Check | Result |
 | --- | --- |
-| Python pytest, SQLite and Postgres 17 | 94 passed on Windows and Linux; no database skips with local test Postgres configured; last coverage measurement 91% |
+| Python pytest, SQLite and Postgres 17 | 98 passed on Windows; preceding 94-test suite also passed on Linux; no database skips with local test Postgres configured; last coverage measurement 91% |
 | Ruff | Passed |
 | Mypy backend | Passed |
 | TypeScript and production Vite build | Passed |

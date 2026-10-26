@@ -18,7 +18,13 @@ def decide(
 ) -> tuple[dict[str, Any], str, dict[str, Any]]:
     state = deepcopy(previous)
     before = state.get("phase", "IDLE")
-    p = parse(text, now, awaiting_time=bool(state.get("slots", {}).get("date")))
+    p = parse(
+        text,
+        now,
+        awaiting_time=bool(state.get("slots", {}).get("date"))
+        and before != "SELECTING_APPOINTMENT"
+        and not state.get("alternatives"),
+    )
     trace: dict[str, Any] = {
         "from_state": before,
         "intent": p.intent,
@@ -108,6 +114,10 @@ def decide(
     prefix = ""
     target: Appointment | None = None
     if intent in ("RESCHEDULE", "CANCEL"):
+        if intent == "CANCEL" and before == "CONFIRMING" and p.selection is not None:
+            state.pop("target", None)
+            state["slots"] = {}
+            trace["rules"].append("cancellation_selection_requires_readback")
         if intent == "CANCEL" and state.get("target") and p.slots:
             current_target = next((a for a in appointments if a.id == state["target"]), None)
             if current_target is not None:
@@ -137,7 +147,7 @@ def decide(
                     a for a in candidates if from_utc(a.start).date().isoformat() == p.slots["date"]
                 ]
             selected = state.get("candidates", [a.id for a in candidates])
-            if before == "SELECTING_APPOINTMENT" and p.selection is not None:
+            if before in ("SELECTING_APPOINTMENT", "CONFIRMING") and p.selection is not None:
                 try:
                     chosen = selected[p.selection]
                     candidates = [a for a in appointments if a.id == chosen]
@@ -180,6 +190,7 @@ def decide(
                 and previous.get("target") == target.id
                 and p.yes
                 and not p.slots
+                and p.selection is None
             ):
                 assert target is not None
                 db.execute(delete(Allocation).where(Allocation.appointment_id == target.id))

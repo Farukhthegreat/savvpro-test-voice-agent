@@ -82,6 +82,12 @@ def parse(text: str, now: datetime, awaiting_time: bool = False) -> Parsed:
         p.selection = {"first": 0, "second": 1, "third": 2, "fourth": 3, "last": -1}[selection[1]]
     elif re.fullmatch(r"(?:number |option |appointment )?[1-9]", raw):
         p.selection = int(raw[-1]) - 1
+    else:
+        spoken_choice = re.fullmatch(
+            r"(?:number |option |appointment )?(one|two|three|four|five|six|seven|eight|nine)", raw
+        )
+        if spoken_choice:
+            p.selection = int(WORDS[spoken_choice[1]]) - 1
     reference = re.search(r"\b[a-f0-9]{8}\b", raw)
     if reference:
         p.reference = reference[0].upper()
