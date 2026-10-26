@@ -10,7 +10,7 @@ from backend.database import Allocation, Appointment
 from backend.domain import describe, from_utc, local_slot, validate_slot
 from backend.nlu import parse
 
-WELCOME = "Welcome to Bayline. I'm your service receptionist. You can book, reschedule, or cancel a demo appointment. How can I help?"
+WELCOME = "Welcome to Bayline. I can book, reschedule, or cancel a demo service appointment. How can I help?"
 
 
 def decide(
@@ -108,6 +108,14 @@ def decide(
     prefix = ""
     target: Appointment | None = None
     if intent in ("RESCHEDULE", "CANCEL"):
+        if intent == "CANCEL" and state.get("target") and p.slots:
+            current_target = next((a for a in appointments if a.id == state["target"]), None)
+            if current_target is not None:
+                current_details = store.summary(current_target)
+                if any(current_details.get(key) != value for key, value in p.slots.items()):
+                    state.pop("target", None)
+                    state["slots"] = {}
+                    trace["rules"].append("cancellation_target_changed")
         if state.get("target"):
             target = next((a for a in appointments if a.id == state["target"]), None)
             if target is None:
@@ -165,7 +173,14 @@ def decide(
                     state["slots"][key] = value
                     state["needs_new_schedule"] = False
         if intent == "CANCEL":
-            if before == "CONFIRMING" and p.yes and not p.slots:
+            if (
+                before == "CONFIRMING"
+                and previous.get("intent") == "CANCEL"
+                and target is not None
+                and previous.get("target") == target.id
+                and p.yes
+                and not p.slots
+            ):
                 assert target is not None
                 db.execute(delete(Allocation).where(Allocation.appointment_id == target.id))
                 target.status = "cancelled"
@@ -240,7 +255,13 @@ def decide(
         return say(message)
     trace["validation"].append("slot_available")
     state.pop("alternatives", None)
-    if before == "CONFIRMING" and p.yes and not updates:
+    if (
+        before == "CONFIRMING"
+        and previous.get("intent") == intent
+        and previous.get("target") == state.get("target")
+        and p.yes
+        and not updates
+    ):
         appointment = store.reserve(db, sid, slots["service"], slots["vehicle"], start, target)
         if appointment is None:
             state["phase"] = "COLLECTING"

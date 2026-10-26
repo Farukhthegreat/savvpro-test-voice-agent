@@ -300,6 +300,29 @@ def test_selection_with_incidental_appointment_word(client: TestClient) -> None:
     assert result["state"]["slots"]["date"] == "2026-10-30"
 
 
+def test_confirmation_cannot_transfer_to_a_different_operation(client: TestClient) -> None:
+    start(client)
+    turn(client, "Book an oil change for my car Thursday at 10 AM")
+    result = turn(client, "yes, cancel my appointment")
+    assert result["state"]["phase"] == "CONFIRMING"
+    assert result["trace"]["action"] == "none"
+    assert len(result["appointments"]) == 1
+    assert "cancel your" in result["reply"]
+
+
+def test_cancellation_correction_selects_new_target_and_reconfirms(client: TestClient) -> None:
+    start(client)
+    turn(client, "Book an oil change for my car Thursday at 10 AM")
+    turn(client, "yes")
+    turn(client, "cancel my tyre rotation")
+    result = turn(client, "actually the oil change instead")
+    assert "Oil Change" in result["reply"]
+    assert result["trace"]["action"] == "none"
+    result = turn(client, "yes")
+    assert len(result["appointments"]) == 1
+    assert result["appointments"][0]["service"] == "tyre_rotation"
+
+
 def test_reschedule_partial_insert_rolls_back_original(
     client: TestClient, monkeypatch: Any
 ) -> None:

@@ -17,4 +17,5 @@ COPY --from=frontend /web/dist ./frontend/dist/
 RUN useradd --create-home bayline && chown -R bayline:bayline /app
 USER bayline
 EXPOSE 8000
-CMD ["sh", "-c", "exec .venv/bin/uvicorn backend.app:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --proxy-headers"]
+# Hosted ingress terminates TLS; trust its forwarded scheme for same-origin checks.
+CMD ["sh", "-c", "exec .venv/bin/uvicorn backend.app:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --proxy-headers --forwarded-allow-ips '*'"]

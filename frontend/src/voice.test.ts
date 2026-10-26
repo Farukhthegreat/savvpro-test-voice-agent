@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { chunkReply, VoiceController, watchdogMs } from './voice'
+import { chunkReply, englishVoices, VoiceController, watchdogMs } from './voice'
 
 describe('speech safety helpers', () => {
+  it('keeps short sentences intact instead of splitting one at the word limit', () => {
+    const first = 'Please confirm your service appointment for tomorrow morning at eleven AM.'
+    const second = 'Say yes to confirm or tell me what to change.'
+    expect(chunkReply(first + ' ' + second)).toEqual([first, second])
+  })
   it('chunks the entire reply without changing words and bounds playback duration', () => {
     const text = Array.from({ length: 55 }, (_, i) => 'word' + i).join(' ')
     const chunks = chunkReply(text)
@@ -47,6 +52,24 @@ describe('synthesis completion guards', () => {
     vi.useRealTimers()
     vi.unstubAllGlobals()
     vi.clearAllMocks()
+  })
+
+  it('prefers available natural/Google voices over basic local voices', () => {
+    const items = [
+      { name: 'Microsoft David', lang: 'en-US', voiceURI: 'david', localService: true },
+      { name: 'Google UK English Female', lang: 'en-GB', voiceURI: 'google', localService: false },
+      {
+        name: 'Microsoft Sonia Online (Natural)',
+        lang: 'en-GB',
+        voiceURI: 'sonia',
+        localService: false,
+      },
+    ] as SpeechSynthesisVoice[]
+    vi.spyOn(window.speechSynthesis, 'getVoices').mockReturnValue(items)
+    expect(englishVoices()[0].voiceURI).toBe('sonia')
+    controller.voiceURI = 'google'
+    controller.speak('Hello.', false)
+    expect(utterances[0].voice?.voiceURI).toBe('google')
   })
 
   it('recovers when onend never fires, once', () => {

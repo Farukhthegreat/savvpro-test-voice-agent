@@ -374,6 +374,27 @@ nav .nav-active:after {
   color: var(--muted);
   margin-top: 9px;
 }
+.reply-voice-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 9px auto 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.reply-voice-select select {
+  min-height: 44px;
+  max-width: min(230px, 58vw);
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #365b7e;
+  font-size: 11px;
+  appearance: none;
+  padding: 7px 3px;
+  cursor: pointer;
+}
 .active-controls {
   display: flex;
   gap: 8px;

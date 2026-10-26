@@ -33,10 +33,49 @@ type Callbacks = {
 }
 
 export function chunkReply(text: string): string[] {
-  const words = text.trim().split(/\s+/).filter(Boolean)
   const chunks: string[] = []
-  while (words.length) chunks.push(words.splice(0, 18).join(' '))
+  let pending: string[] = []
+  for (const sentence of text
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean)) {
+    const words = sentence.split(/\s+/)
+    if (pending.length && pending.length + words.length > 18) {
+      chunks.push(pending.join(' '))
+      pending = []
+    }
+    while (words.length > 18) {
+      let boundary = 18
+      for (let index = 17; index >= 7; index--) {
+        if (/[,;:]$/.test(words[index])) {
+          boundary = index + 1
+          break
+        }
+      }
+      chunks.push(words.splice(0, boundary).join(' '))
+    }
+    pending.push(...words)
+  }
+  if (pending.length) chunks.push(pending.join(' '))
   return chunks
+}
+
+export function englishVoices(): SpeechSynthesisVoice[] {
+  const score = (voice: SpeechSynthesisVoice) => {
+    const name = voice.name.toLowerCase()
+    return (
+      (/natural|neural|premium|enhanced/.test(name)
+        ? 100
+        : /google/.test(name)
+          ? 80
+          : /online/.test(name)
+            ? 70
+            : 0) + (voice.lang === 'en-US' || voice.lang === 'en-GB' ? 5 : 0)
+    )
+  }
+  return (window.speechSynthesis?.getVoices() ?? [])
+    .filter((voice) => voice.lang.toLowerCase().startsWith('en'))
+    .sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name))
 }
 
 export function watchdogMs(text: string): number {
@@ -50,6 +89,7 @@ export function browserSpeechAvailable(): boolean {
 export class VoiceController {
   active = false
   mode: SpeechMode = 'browser'
+  voiceURI = ''
   private generation = 0
   private recognition: Recognition | null = null
   private recorder: MediaRecorder | null = null
@@ -158,12 +198,10 @@ export class VoiceController {
       const utterance = new SpeechSynthesisUtterance(chunk)
       utterance.lang = 'en-US'
       utterance.rate = 1
-      const voices = window.speechSynthesis.getVoices()
+      const voices = englishVoices()
       utterance.voice =
-        voices.find((voice) => voice.lang === 'en-GB' && voice.localService) ??
-        voices.find((voice) => voice.lang.startsWith('en') && voice.localService) ??
-        voices.find((voice) => voice.lang.startsWith('en')) ??
-        null
+        voices.find((voice) => voice.voiceURI === this.voiceURI) ?? voices[0] ?? null
+      if (utterance.voice) utterance.lang = utterance.voice.lang
       let finished = false
       const finish = (timedOut = false) => {
         if (finished || generation !== this.generation) return
@@ -172,7 +210,7 @@ export class VoiceController {
         utterance.onend = null
         utterance.onerror = null
         if (timedOut) window.speechSynthesis.cancel()
-        this.timer = window.setTimeout(next, 40)
+        this.timer = window.setTimeout(next, 0)
       }
       utterance.onend = () => finish()
       utterance.onerror = () => finish()

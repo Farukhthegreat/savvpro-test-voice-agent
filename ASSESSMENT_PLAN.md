@@ -15,8 +15,9 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 ## Progress
 
 - Repository, rules, environment, backend, interface, and assessment documentation implemented.
-- 90 pytest cases pass across SQLite and Postgres; backend coverage 91%. Type/lint, frontend checks and 8 Vitest tests pass.
+- 94 pytest cases pass across SQLite and Postgres, on Windows and Linux; last backend coverage 91%. Type/lint, frontend checks and 10 Vitest tests pass.
 - Actual API browser smoke and desktop/mobile render checks pass. Independent UI finish-review disposition: ship.
 - Docker build and non-root runtime verified. Confirmed booking and revision persist across a container restart with Postgres.
-- Remaining: candidate's real microphone check, optional Groq live check, Neon setup, public deployment, final evidence refresh and submission.
-- Hosting change: the candidate's Render workspace is suspended for unpaid invoices. The same app also has Railway deployment configuration; account availability is being checked before provisioning.
+- Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
+- Remaining: second microphone/cadence check, optional Groq live check, Neon setup, public deployment, final evidence refresh and submission.
+- Hosting: original Render workspace suspended; Railway signup unavailable. Candidate is configuring an available Google-login Render account using the public candidate branch. GitHub-hosted Actions cannot start because of an account billing lock; equivalent Linux-container checks are recorded separately.

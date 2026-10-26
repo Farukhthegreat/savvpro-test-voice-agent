@@ -27,7 +27,7 @@ import {
 } from 'lucide-react'
 import { api, ApiError } from './types'
 import type { Appointment, Capabilities, DecisionTrace, SessionData, TurnResult } from './types'
-import { browserSpeechAvailable, VoiceController } from './voice'
+import { browserSpeechAvailable, englishVoices, VoiceController } from './voice'
 import type { SpeechMode, VoiceStatus } from './voice'
 import './styles.css'
 
@@ -90,6 +90,8 @@ export default function App() {
   const [interim, setInterim] = useState('')
   const [callStarted, setCallStarted] = useState(false)
   const [mode, setMode] = useState<SpeechMode>('browser')
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [replyVoice, setReplyVoice] = useState('')
   const [resetPrompt, setResetPrompt] = useState(false)
   const sessionRef = useRef<SessionData | null>(null)
   const pending = useRef(false)
@@ -140,6 +142,13 @@ export default function App() {
       epoch.current++
     }
   }, [load])
+
+  useEffect(() => {
+    const refresh = () => setVoices(englishVoices())
+    refresh()
+    window.speechSynthesis?.addEventListener?.('voiceschanged', refresh)
+    return () => window.speechSynthesis?.removeEventListener?.('voiceschanged', refresh)
+  }, [])
 
   useEffect(() => {
     transcriptBottom.current?.scrollIntoView?.({ behavior: 'instant', block: 'nearest' })
@@ -471,6 +480,27 @@ export default function App() {
                   ? 'English · Microphone access required'
                   : 'Voice recognition is unavailable here. Try Chrome or use the text box.'}
               </p>
+              <label className="reply-voice-select">
+                <Volume2 size={14} />
+                <span>Reply voice</span>
+                <select
+                  aria-label="Reply voice"
+                  value={replyVoice}
+                  disabled={busy || status === 'speaking'}
+                  onChange={(event) => {
+                    setReplyVoice(event.target.value)
+                    if (voice.current) voice.current.voiceURI = event.target.value
+                  }}
+                >
+                  <option value="">Best available English voice</option>
+                  {voices.map((item) => (
+                    <option key={item.voiceURI} value={item.voiceURI}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={12} />
+              </label>
             </div>
 
             <div className="conversation-heading">

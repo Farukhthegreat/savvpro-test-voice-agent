@@ -54,6 +54,8 @@ Select **Server speech** if browser recognition is unavailable/inaccurate and Gr
 
 Browser recognition is not universally supported and may require internet access. Typed input remains available. Synthesis has a capped watchdog and chunked replies so a missing completion event cannot indefinitely block the next turn.
 
+The **Reply voice** selector lists English voices actually available in your browser. Automatic selection prefers voices labelled Natural/Neural/Enhanced, then Google voices, ahead of basic local voices. Reply chunks prefer sentence and clause boundaries to avoid unnecessary mid-sentence pauses. Available voice quality depends on the browser and device.
+
 ## Tests and checks
 
 ```sh

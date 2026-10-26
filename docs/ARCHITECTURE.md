@@ -62,7 +62,7 @@ Reset claims and advances the same revision, deletes only that session's fixture
 
 Recognition is suspended during synthesized replies. Interim results are display-only. A final transcript, a typed utterance, and a chip all use the same turn endpoint. A failed network request retains the same turn ID for safe retry.
 
-Synthesis uses chunks of at most 18 words. Every chunk flushes the synthesis queue and has a duration estimate plus buffer, capped at 12 seconds. `onend`, `onerror`, timeout, and user cancellation share guarded completion; generation tokens discard callbacks after interruption, reset, or teardown. This prevents a missing browser completion event from leaving the controller stuck speaking.
+Synthesis uses chunks of at most 18 words, preserving complete sentences and preferring clause boundaries when a sentence is longer. Available natural/neural or Google English voices are preferred over basic local voices, with a user-selectable override. Every chunk flushes the synthesis queue and has a duration estimate plus buffer, capped at 12 seconds. `onend`, `onerror`, timeout, and user cancellation share guarded completion; generation tokens discard callbacks after interruption, reset, or teardown. This prevents a missing browser completion event from leaving the controller stuck speaking.
 
 Server speech is capability-gated by GROQ_API_KEY. MediaRecorder captures a maximum 20-second turn, ends after 1.4 seconds of silence following speech, and supports explicit stop. It releases microphone tracks/audio contexts, sends bounded audio to `/api/stt`, and submits the returned text separately to the normal turn endpoint. Provider failure never mutates appointments. No raw recordings are stored by this application.
 

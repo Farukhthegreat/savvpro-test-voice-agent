@@ -17,6 +17,8 @@ AI assistance was used throughout this assessment. **No language model participa
 3. Initial test parameter IDs included a 5 MB binary value, producing unusably long test paths/output on Windows. Explicit short test IDs fixed the test harness.
 4. A browser-artifact script used URL pathname text without decoding spaces, writing screenshots to a percent-encoded sibling path. It now uses `fileURLToPath`; evidence was recovered and recaptured in the intended workspace.
 5. A first design pass used 42px controls despite the stated 44px target. The independent review caught this; select/send/appointment controls were corrected and re-reviewed.
+6. Review found that confirmation could transfer across operation/appointment changes. Tests reproduced it; confirmation now requires the same operation and target as the preceding readback, and cancellation corrections select and read back the new target.
+7. The candidate's live test exposed robotic local-voice preference and pauses caused by fixed-size chunks. English natural/Google voices are now preferred, a reply-voice selector is available, and chunks preserve sentence/clause boundaries where possible. A second live check is still needed.
 
 ## Token evidence
 
