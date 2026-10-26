@@ -1,25 +1,26 @@
-﻿# Bayline design system
+# Bayline design system
 
-This master records the shipped, user-approved interface. The initial UI UX Pro Max search recommendations were reviewed against the approved composition; conflicting generic marketing, red-CTA, and remote-font suggestions were not adopted.
+This record describes the shipped black-and-gold interface. The user's precise redesign brief supersedes earlier white/slate/blue guidance while preserving approved layout B's reception topology.
 
 ## Source of truth
 
 - PRODUCT.md: product facts and assessment constraints.
-- DESIGN.md: shipped visual tokens, components, and deterministic-brain appendix.
-- frontend/src/tokens.css: implementation primitives.
-- pages/reception.md: caller-workspace composition and behavior overrides.
+- DESIGN.md: normative visual tokens, component guidance, and preserved deterministic-brain appendix.
+- frontend/src/tokens.css and frontend/src/styles.css: implemented primitives and responsive behavior.
+- pages/reception.md: reception composition and booking-management behavior.
 
 ## System
 
-- White panels on cool gray; slate text and a restrained blue action color.
-- Primary #245e97; hover #194e82; tint #edf3f9; canvas #f5f7fa; ink #15273b; muted #596d82; dividers #e1e7ee.
-- Approved local system sans. Large task heading, prominent appointment time, readable transcript, subordinate metadata.
-- Top navigation; approximately 65/35 call/appointment split; single-column mobile flow.
-- Flat regions separated by whitespace, tone, and dividers. No ornamental elevation.
-- Controls >=44px; quick utterances wrap without truncation; mobile message input is 16px.
-- Visible keyboard focus, semantic labels/log/details, real error/loading/disabled states, reduced-motion support.
-- One CSS waveform illustrating actual controller status; no claim of measured audio amplitude.
-- Use actual API data. No invented confidence scores, customer details, durations, locations, or confirmations.
-- The decision inspector reveals matched rules, extracted slots, validation, actions, and revision.
+- Matte charcoal canvas, dark working surfaces, warm brass actions, and off-white facts; exact palette lives in DESIGN.md and tokens.css.
+- Self-hosted Manrope Variable; tightly tracked task headings, prominent tabular appointment time, subordinate metadata.
+- Coherent Lucide SVG icons and a local brass monogram favicon/header identity.
+- Desktop call/appointment split; visible second-row mobile navigation and a single-column task flow below 800px.
+- Distinct Reception and Your appointments views, reachable through hash navigation and browser history.
+- Flat tonal regions and fine borders; no shadows, gradients, glows, physical-metal effects, or required photographic assets.
+- Primary/text/icon controls at least 44px high; mobile composer input 16px below 440px.
+- Visible keyboard focus, semantic labels/log/details, actual error/loading/disabled states, reduced-motion support.
+- Local transcript scrolling; illustrative waveform animates only for listening and speaking.
+- Booking management uses owned references and returns to reception for explicit confirmation.
+- Actual API facts and decision traces; no invented customer details, durations, confidence scores, locations, or confirmations.
 
-This is an operational app, not a marketing landing page. No unverified accessibility-conformance or provider-quality claims.
+This is an operational fictional demo. Visual documentation does not establish manual microphone, provider, hosting, or accessibility-conformance verification.

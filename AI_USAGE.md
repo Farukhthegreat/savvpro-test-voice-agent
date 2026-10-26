@@ -47,3 +47,11 @@ The exporter includes only token metadata and reported model identifiers, exclud
 ## Human validation and limitations
 
 Automated tests validate actual Python decisions and transactions on both database dialects. Live microphone accuracy, browser voice quality, provider access, and public deployment require separate checks; their status is maintained honestly in [docs/VERIFICATION.md](docs/VERIFICATION.md). AI-generated assertions are not accepted as verification evidence.
+
+## Black-and-gold revision assistance
+
+The candidate requested a black-and-gold interface, SVG identity/icons, easier operation, and a fix for Your appointments. AI assistance replaced the visual tokens/styles, added hash-based appointment navigation and selected-reference actions, exposed typed entry, and updated component/browser checks. UI UX Pro Max and Impeccable informed the implementation. Fresh independent finish-review and design-documenter agents were used as required by Impeccable; the final review disposition was ship.
+
+Observed corrections: the previous appointment link only scrolled to the existing summary and disappeared on mobile; it now opens a dedicated list. Whole-page transcript scrolling on initialization was replaced with local scroll-container movement. A font stylesheet import and overly specific test queries failed during verification and were corrected before the final successful build and 16-test run. Browser smoke timeout was increased to accommodate the hosted database connection; no speech accuracy was inferred from that test.
+
+The token snapshots above retain their actual recorded cutoff. They predate this interface revision; fresh token metadata for this hosted continuation/review/documenter is not available in the local logs exposed to this run. No additional totals have been estimated or added.

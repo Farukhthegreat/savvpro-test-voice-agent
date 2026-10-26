@@ -15,7 +15,7 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 ## Progress
 
 - Repository, rules, environment, backend, interface, and assessment documentation implemented.
-- 100 pytest cases pass across SQLite and Postgres on Windows; preceding 98-test suite passed on Linux; backend coverage 91%. Type/lint and production build pass. 11 Vitest tests pass on Windows; preceding 10-test suite passed on Linux.
+- 100 pytest cases pass across SQLite and Postgres on Windows; preceding 98-test suite passed on Linux; backend coverage 91%. Type/lint and production build pass. 16 Vitest tests pass on Windows; preceding 10-test suite passed on Linux.
 - Actual API browser smoke and desktop/mobile render checks pass. Independent UI finish-review disposition: ship.
 - Docker build and non-root runtime verified. Confirmed booking and revision persist across a container restart with Postgres.
 - Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
@@ -24,3 +24,7 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 - Latest runtime deployment 7b01b76 confirmed by candidate and public asset fingerprint; final hosted browser smoke passes.
 - Remaining human check: final hosted microphone/cadence preference. Optional Groq remains unconfigured and is not claimed as live-verified. Evidence and submission are updated.
 - Hosting: original Render workspace suspended; Railway signup unavailable. Candidate is configuring an available Google-login Render account using the public candidate branch. GitHub-hosted Actions cannot start because of an account billing lock; equivalent Linux-container checks are recorded separately.
+
+## User-requested interface revision
+
+Black/charcoal and brass gold replace the white/blue world. SVG icons and favicon, self-hosted Manrope, service shortcuts, visible mobile navigation, and a dedicated appointments view are implemented. Appointment actions pass the selected reference through the same deterministic confirmation flow. Initial transcript scrolling remains local, and Type instead exposes the non-microphone path. Desktop/mobile real-Neon workflows and 16 frontend tests pass; the fresh finish-review disposition is ship. Push this revision and deploy the latest candidate commit on Render, then confirm its new asset fingerprint before claiming the new UI is public.

@@ -1,9 +1,10 @@
-import { chromium, expect } from '@playwright/test'
+import { chromium, expect as baseExpect } from '@playwright/test'
 import { mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
 // UI smoke and walkthrough only. Actual microphone speech requires manual Chrome verification.
 const baseURL = process.env.SMOKE_URL || 'http://127.0.0.1:8000'
+const expect = baseExpect.configure({ timeout: 45000 })
 const root = new URL('../../artifacts/', import.meta.url)
 await mkdir(root, { recursive: true })
 const browser = await chromium.launch({ headless: true })
@@ -34,10 +35,19 @@ async function send(text) {
 try {
   await page.goto(baseURL)
   await expect(page.getByText('11:00 AM', { exact: true })).toBeVisible()
+  expect(await page.evaluate(() => window.scrollY)).toBe(0)
   await page.screenshot({
     path: fileURLToPath(new URL('reception-desktop.png', root)),
     fullPage: true,
   })
+  await page.getByRole('link', { name: /Your appointments/ }).click()
+  await expect(page.getByRole('heading', { name: 'Your appointments.' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Reschedule', exact: true })).toBeVisible()
+  await page.screenshot({
+    path: fileURLToPath(new URL('appointments-desktop.png', root)),
+    fullPage: true,
+  })
+  await page.getByRole('link', { name: 'Reception', exact: true }).click()
   const first = await send('Book a brake inspection for my SUV tomorrow at 2 PM')
   expect(first.trace.validation).toContain('both_bays_occupied')
   await page.locator('.inspector summary').click()
@@ -53,7 +63,16 @@ try {
   await send('Thursday at 3 PM')
   const moved = await send('yes')
   expect(moved.trace.action).toBe('rescheduled')
-  await send('cancel my tyre rotation')
+  await page.getByRole('link', { name: /Your appointments/ }).click()
+  await expect(page.getByRole('article')).toHaveCount(2)
+  const cancelRequest = page.waitForResponse((response) => response.url().endsWith('/api/turn'))
+  await page
+    .getByRole('article')
+    .filter({ hasText: 'Tyre Rotation' })
+    .getByRole('button', { name: 'Cancel appointment' })
+    .click()
+  expect((await cancelRequest).status()).toBe(200)
+  await expect(page.getByRole('textbox', { name: 'Type your message' })).toBeVisible()
   const cancelled = await send('yes')
   expect(cancelled.trace.action).toBe('cancelled')
   await page.getByRole('button', { name: /Reset demo/ }).click()
@@ -72,6 +91,7 @@ try {
   phone.on('pageerror', (error) => errors.push(error.message))
   await phone.goto(baseURL)
   await expect(phone.getByText('11:00 AM', { exact: true })).toBeVisible()
+  expect(await phone.evaluate(() => window.scrollY)).toBe(0)
   expect(
     await phone.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true)
@@ -79,10 +99,23 @@ try {
     path: fileURLToPath(new URL('reception-mobile.png', root)),
     fullPage: true,
   })
+  await phone.getByRole('link', { name: /Your appointments/ }).click()
+  await expect(phone.getByRole('heading', { name: 'Your appointments.' })).toBeVisible()
+  expect(
+    await phone.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).toBe(true)
+  await phone.screenshot({
+    path: fileURLToPath(new URL('appointments-mobile.png', root)),
+    fullPage: true,
+  })
+  const mobileRequest = phone.waitForResponse((response) => response.url().endsWith('/api/turn'))
+  await phone.getByRole('button', { name: 'Reschedule', exact: true }).click()
+  expect((await mobileRequest).status()).toBe(200)
+  await expect(phone.getByRole('textbox', { name: 'Type your message' })).toBeVisible()
   await mobile.close()
   expect(errors).toEqual([])
   console.log(
-    'PASS: booking, alternatives, selection, rescheduling, cancellation, reset, desktop/mobile rendering; no page errors.',
+    'PASS: booking, alternatives, selection, rescheduling, cancellation via appointments page, reset, desktop/mobile navigation and rendering; no page errors.',
   )
 } finally {
   await context.close()

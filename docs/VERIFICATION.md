@@ -8,7 +8,7 @@ Date: 26 October 2026 (PKT). Update this record from actual runs before submissi
 | Ruff | Passed |
 | Mypy backend | Passed |
 | TypeScript and production Vite build | Passed |
-| Vitest | 11 passed on Windows; preceding 10-test suite also passed on Linux |
+| Vitest | 16 passed on Windows after the black/gold revision; preceding 10-test suite also passed on Linux |
 | Real backend browser smoke | Passed: alternatives, booking, multi-appointment selection, rescheduling, cancellation, reset |
 | Desktop 1440px / mobile 390px | Rendered, screenshots captured; no horizontal overflow at mobile size |
 | Browser JavaScript errors during smoke | None |
@@ -25,3 +25,14 @@ Date: 26 October 2026 (PKT). Update this record from actual runs before submissi
 The installed Starlette TestClient emits a deprecation warning about httpx; it does not fail the test suite. Do not suppress or reinterpret unavailable live checks as passes.
 
 The final hosted browser smoke passed on the fresh-call greeting build (runtime commit 7b01b76), identified by frontend asset `index-Bgm5S7gI.js`; the candidate also confirmed the deployment passed. One repeat was interrupted by a local DNS lookup failure; DNS recovered and the retry passed. Subsequent documentation-only evidence updates do not change the runtime or require another deployment. Final public voice quality and optional Groq live access are not implied by automated checks.
+
+
+## Black-and-gold interface revision ? 26 October, approximately 20:40 PKT
+
+- Root `npm run build`: passed; generated `index-CWcEv-oe.js` / `index-BCEVZ1Rb.css` and locally served Manrope font files. Dependency audit reported zero vulnerabilities.
+- Vitest: 16 passed, including dedicated navigation/deep links, selected-reference management with multiple appointments, empty state, explicit cancellation flow, and typed-entry focus.
+- Actual-Neon browser smoke: passed booking/occupied alternatives, multi-appointment selection, rescheduling, cancellation through the appointments page, reset, and desktop/mobile navigation. Both initial pages retain `scrollY === 0`; mobile has no horizontal overflow; no page JavaScript errors.
+- Backend regression: 100 pytest passed across SQLite/Postgres, Ruff passed, Mypy passed.
+- Design detector: no findings. Independent finish-review final disposition: **ship**, with both original findings resolved (local transcript scrolling and visible typed fallback).
+- Updated desktop/mobile screenshots cover reception and the dedicated appointments view. The silent recording shows the new interface.
+- Public deployment of this new UI is pending Render's next deployment; the earlier hosted verification above applies to the preceding runtime. Final real-microphone/voice-quality and optional live Groq checks remain separate.

@@ -1,11 +1,14 @@
-# Reception overrides — user-approved layout B
+# Reception overrides: approved layout B, black-and-gold redesign
 
-This page's approved product brief overrides the generic design-system search output.
+The user's precise black-and-gold brief overrides the previous white/slate/blue world and generic design-search output. Approved B's task hierarchy remains.
 
-- Operate mode: an actual booking workspace, not a marketing hero/features/CTA page.
-- Use the white/slate/blue tokens in frontend/src/tokens.css; no red primary CTA.
-- Use the approved crisp system sans stack. No remote font requests or generated image text.
-- Preserve top navigation, a roughly 65/35 call/appointment split, transcript/composer, quick utterances, and expandable decision inspector.
-- Use accessible blue controls, visible keyboard focus, meaningful disabled/error/loading states, 44px touch targets, and reduced-motion support.
-- The waveform illustrates voice-controller status; it does not claim to measure the microphone's audio waveform.
-- Do not claim WCAG AAA conformance from a recommendation. Verify actual contrast and keyboard behavior.
+- Operate mode: booking, rescheduling, and cancellation in a real session-scoped workspace.
+- Use charcoal surfaces, brass controls, self-hosted Manrope Variable, consistent Lucide SVG icons, and the local monogram/favicon. Normative values live in DESIGN.md and frontend/src/tokens.css.
+- Preserve header navigation, desktop call/appointment split, service shortcuts, transcript/composer, quick requests, and expandable decision inspector.
+- Keep Reception and Your appointments navigable on desktop and mobile. The appointments page lists owned bookings and sends specific-reference management actions back through reception's confirmation flow.
+- At 800px and below, place navigation on a visible second row and stack the reception. At 440px, use 18px gutters and single-column request/management actions.
+- Keep the transcript in its own scroll region; provide Type instead next to the primary call action.
+- Use visible focus, meaningful status/error/loading/disabled states, 44px primary control targets, and reduced-motion handling.
+- The waveform illustrates controller status; it does not measure microphone amplitude.
+- Use actual API facts. Never reproduce fictional dates or customer details from reference comps as live booking data.
+- Do not claim voice/provider or accessibility-conformance verification from the design alone.

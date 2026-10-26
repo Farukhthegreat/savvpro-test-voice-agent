@@ -8,7 +8,7 @@ Each browser gets an isolated, fictional two-bay workshop, occupied test slots, 
 
 ![Bayline reception running with a real seeded demo appointment](docs/images/reception-desktop.png)
 
-[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png)
+[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png) ? [Appointments page](docs/images/appointments-desktop.png)
 
 ## Run locally
 
@@ -38,6 +38,8 @@ For frontend development, run Python and `npm --prefix frontend run dev` in sepa
 6. A brake inspection at **5:30 PM** is rejected because it would finish after 6 PM. An oil change has a valid duration then, subject to availability.
 7. Create another booking, then ask to cancel without identifying it: the assistant asks which appointment. Choose by number, service, vehicle, or reference.
 8. Expand **How the assistant decided** to inspect real rule matches and state transitions.
+
+**Your appointments** opens a dedicated booking list on desktop and mobile. Its reschedule/cancel actions identify the selected booking by reference and return to reception for confirmation. Service shortcuts start a booking without inventing missing details; **Type instead** takes you directly to the composer.
 
 Quick-test buttons and typed input use the same decision endpoint as voice. Pause/resume, replay, interrupt playback, finish recording, and end-call controls are available. **Reset demo → Reset Demo Session** restores only your own fixtures and conversation. On Sunday, the initial appointment moves to the next opening day; calendar dates always use Pakistan time.
 

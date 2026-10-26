@@ -20,7 +20,7 @@ Each browser owns a separate synthetic two-bay workshop and fictional caller Ale
 No runtime LLM decisions. Browser speech primary, optional Groq Whisper transcription, browser synthesis. Hands-free turn-taking with explicit controls and typed fallback. Seeded appointments, quick utterances, isolated reset. Free hosting and speech services. Midnight PKT assessment deadline on 27 October 2026.
 
 ## Brand Commitments
-Premium service reception: clear call controls, crisp typography, restrained color, live booking details, useful feedback. Bayline is a fictional demo identity, not a real workshop.
+User-requested black-and-gold redesign: charcoal/black surfaces, warm brass-gold actions, a coherent SVG identity/favicon and icons, clear typography, restrained motion, and usable mobile navigation. Reception and Your appointments are distinct navigable views. Keep service selection and booking management easy to discover. Bayline is a fictional demo identity, not a real workshop.
 
 ## Evidence on Hand
 TASK.md defines the assessment. All workshop identities and bookings are synthetic. Verification results and usage logs must be recorded from actual runs.

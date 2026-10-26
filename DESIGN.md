@@ -1,78 +1,79 @@
 ---
 name: Bayline Service Reception
-description: A calm vehicle-service reception with visible, deterministic booking decisions.
+description: Matte charcoal reception with warm brass actions and explicit appointment review.
 colors:
-  blue: "#245e97"
-  blue-hover: "#194e82"
-  blue-tint: "#edf3f9"
-  canvas: "#f5f7fa"
-  surface: "#ffffff"
-  ink: "#15273b"
-  muted: "#596d82"
-  line: "#e1e7ee"
+  canvas: "#0b0d10"
+  surface: "#121519"
+  raised: "#1a1e23"
+  ink: "#f1ede4"
+  muted: "#a7abae"
+  line: "#303338"
+  gold: "#dfbd7d"
+  gold-hover: "#eccd96"
+  gold-tint: "#27241e"
+  success: "#a9c5af"
+  danger: "#e6a6a2"
 typography:
   display:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "clamp(30px, 3.4vw, 44px)"
+    fontFamily: "Manrope Variable, Segoe UI, sans-serif"
+    fontSize: "clamp(30px, 3vw, 43px)"
     fontWeight: 650
-    lineHeight: 1.13
+    lineHeight: 1.18
     letterSpacing: "-0.035em"
   title:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontFamily: "Manrope Variable, Segoe UI, sans-serif"
     fontSize: "16px"
     fontWeight: 650
-    lineHeight: 1.4
     letterSpacing: "-0.015em"
   body:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontFamily: "Manrope Variable, Segoe UI, sans-serif"
     fontSize: "15px"
-    fontWeight: 400
-    lineHeight: 1.55
-  conversation:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    lineHeight: 1.6
+  control:
+    fontFamily: "Manrope Variable, Segoe UI, sans-serif"
     fontSize: "13px"
-    fontWeight: 400
-    lineHeight: 1.65
+    fontWeight: 650
+  conversation:
+    fontFamily: "Manrope Variable, Segoe UI, sans-serif"
+    fontSize: "12px"
+    lineHeight: 1.75
 rounded:
-  compact: "6px"
   control: "8px"
   field: "10px"
   panel: "12px"
-  shell: "16px"
+  stage: "14px"
 spacing:
-  small: "8px"
-  compact: "12px"
-  medium: "16px"
-  comfortable: "20px"
-  section: "24px"
-  large: "32px"
+  compact: "8px"
+  control: "12px"
+  row: "20px"
+  section: "28px"
 components:
   button-primary:
-    backgroundColor: "{colors.blue}"
-    textColor: "{colors.surface}"
+    backgroundColor: "{colors.gold}"
+    textColor: "{colors.canvas}"
+    typography: "{typography.control}"
     rounded: "{rounded.control}"
-    padding: "11px 18px"
+    padding: "12px 19px"
   button-primary-hover:
-    backgroundColor: "{colors.blue-hover}"
+    backgroundColor: "{colors.gold-hover}"
   button-secondary:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.blue}"
+    backgroundColor: "{colors.raised}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.control}"
-    padding: "11px 18px"
-  button-secondary-hover:
-    backgroundColor: "{colors.blue-tint}"
+    padding: "12px 19px"
   button-text:
     textColor: "{colors.muted}"
-    padding: "9px 0"
+    rounded: "{rounded.control}"
+    padding: "10px 3px"
   field-composer:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
     rounded: "{rounded.field}"
-    padding: "7px"
-  chip-utterance:
+    padding: "5px"
+  panel-appointment:
     backgroundColor: "{colors.surface}"
-    rounded: "{rounded.control}"
-    padding: "14px 16px"
+    rounded: "{rounded.stage}"
+    padding: "25px"
   panel-inspector:
     backgroundColor: "{colors.surface}"
     rounded: "{rounded.panel}"
@@ -82,126 +83,121 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Calm Service Reception"**
+**Creative North Star: "The Brass Service Reception"**
 
-Bayline turns a spoken vehicle-service request into a reviewed appointment. Its white surfaces, slate text, restrained blue controls, and precise dividers convey an orderly reception desk. Crisp system typography is an explicit user-approved choice, with no remote font dependency. Generous space around the call controls balances compact appointment details and conversation rows.
+Bayline is an operational reception desk expressed in matte charcoal, warm brass, and precise ruled details. The user-requested black-and-gold world supersedes the earlier white/slate/blue theme while retaining the approved reception composition. Its premium character comes from restrained contrast, self-hosted Manrope, generous task spacing, and coherent SVG identity rather than imagery or metallic effects.
 
-The product serves fictional callers booking, rescheduling, or cancelling car and SUV services. Every browser owns an isolated two-bay workshop and the fictional Alex Rivera profile. The caller's task stays primary; an expandable inspector exposes the actual Python decisions. No real contact, registration, or payment details belong in this experience.
-
-This record describes the shipped React interface in `frontend/src/tokens.css`, `frontend/src/styles.css`, and `frontend/src/App.tsx`, checked against the desktop and mobile captures in `artifacts/`. The approved reception overrides in `design-system/bayline/pages/reception.md` take precedence over generic generated recommendations. The reference mock supplies composition, not fictional booking facts to copy.
+Call controls, conversation, and appointment review remain the main experience. A dedicated Your appointments view makes session-owned booking management discoverable; technical evidence stays in an expandable inspector. This record derives from the shipped React components and CSS, not a promise of manual voice or accessibility verification.
 
 **Key Characteristics:**
 
-- White working surfaces on a cool slate canvas.
-- Restrained blue actions and flat, finely divided panels.
-- Clear call status, readable conversation, and a prominent appointment time.
-- Confirmation before changes, with actual decision evidence available on demand.
+- Matte charcoal surfaces with warm brass actions and off-white facts.
+- Self-hosted variable typography and consistent stroked SVG icons.
+- Flat, finely divided working regions and explicit appointment states.
+- Visible mobile navigation, typed fallback, and confirmation before changes.
 
 ## Colors
 
-The palette uses a single blue accent with cool neutral surfaces; the frontmatter is the normative palette.
+The frontmatter records the implemented CSS palette; one warm brand accent sits above a compact dark neutral stack.
 
 ### Primary
 
-- **Reception Blue** (`blue`): primary call, send, and confirmation controls, pending appointment time, and interactive emphasis.
-- **Pressed Blue** (`blue-hover`): primary-control hover feedback.
-- **Quiet Blue** (`blue-tint`): secondary hover and informational treatment.
+- **Warm Brass** (`gold`): primary actions, active navigation, service icons, proposed appointment details, and voice-state bars.
+- **Light Brass** (`gold-hover`): enabled primary-action hover feedback.
+- **Brass Tint** (`gold-tint`): quiet avatar and reset-notice surfaces.
 
 ### Neutral
 
-- **Cool Canvas** (`canvas`): the page background outside working panels.
-- **Reception White** (`surface`): primary workspace, navigation, composer, and quick utterances.
-- **Slate Ink** (`ink`): headings and appointment facts.
-- **Slate Secondary** (`muted`): supporting instructions, field labels, and secondary actions.
-- **Fine Divider** (`line`): panel boundaries, ticket rows, and structural rules.
+- **Charcoal Canvas** (`canvas`): page and header ground; dark text on brass controls.
+- **Reception Surface** (`surface`): call stage, composer, appointment panel, and inspector.
+- **Raised Charcoal** (`raised`): secondary controls, count badges, and quiet hover treatment.
+- **Warm Ink** (`ink`): headings, appointment facts, and conversation text.
+- **Quiet Gray** (`muted`): supporting instructions, metadata, and secondary actions.
+- **Ruled Divider** (`line`): panel boundaries and structural separators.
 
-Small green, amber, and red state treatments distinguish confirmed, pending, warning, and end-call states. They remain semantic component treatments rather than additional brand accents; text and icons communicate their meaning too.
+Success and danger are semantic colors, reinforced by labels and icons. Pending proposals use brass; confirmed bookings use muted green. Error/end-call components also use local subdued red surfaces.
 
-**The Action Blue Rule.** Use blue to identify an available action or a current proposal; keep most working surfaces white or neutral.
+**The Brass Action Rule.** Reserve brass for interaction, current proposals, and small status or identity accents; keep large working surfaces charcoal.
 
 ## Typography
 
-**Display and body font:** the same locally available system sans stack, recorded in the frontmatter. Monospace is limited to booking references and actual rule identifiers.
+**Display and body font:** self-hosted Manrope Variable, imported through `@fontsource-variable/manrope`, with local sans fallbacks. References and rule identifiers use the browser's monospace stack.
 
-**Character:** crisp and utilitarian, with a stronger weight and tighter tracking for the main heading and appointment time. This deliberately follows the approved reception direction.
+**Character:** rounded sans letterforms, controlled weight changes, tight display tracking, and tabular appointment numerals. The frontmatter records shared roles; local section headings vary by density.
 
 ### Hierarchy
 
-- **Display:** the responsive frontmatter role introduces the caller's task. At the narrow breakpoint it becomes a fixed mobile heading (33px).
-- **Appointment time:** a distinct ticket anchor, fluid on desktop (`clamp(37px, 4.4vw, 61px)`), intermediate at 42px and mobile at 52px; weight 650, line-height 1, tracking -0.04em.
-- **Title:** the frontmatter role defines section hierarchy; local panel headings use compact variations rather than competing with the display.
-- **Body:** the frontmatter role sets the base reading rhythm; the mobile base grows to 16px.
-- **Conversation:** the frontmatter role limits transcript lines to 72ch and grows to 14px on mobile. Messages wrap long content and preserve line breaks.
+- **Display:** responsive task heading; the narrow layout uses `clamp(30px, 5.7vw, 40px)`.
+- **Appointment time:** the reception ticket uses 48px, weight 550, line-height 1.2, and tracking -0.035em; list times use 30px and become 27px below 800px.
+- **Title:** compact section headings, with a larger 20px service title in appointment rows.
+- **Body and conversation:** use the recorded reading roles; transcript text preserves line breaks and wraps long content.
+- **Controls:** consistent medium-weight action labels. The composer input becomes 16px below 440px.
 
-The shipped interface also contains compact annotation text. Its smallest sizes are not a reusable reading-text scale for new surfaces; preserve readable message and input sizes.
+Small annotation text exists in the shipped interface. Do not reuse its smallest sizes as general reading-text defaults.
 
 ## Layout
 
-The reception is an operating workspace. Its desktop shell combines a wider call/conversation region with a narrower appointment ticket. The current grid uses `minmax(0, 1fr) minmax(300px, 0.465fr)` inside a centered container (maximum 1480px). Main horizontal padding is 3.5%, becoming 48px above 1550px. Fine dividers organize the call stage, conversation, and ticket details.
+The centered content container has a maximum width of 1352px and 28px desktop gutters. The reception pairs a wider call/conversation column with an appointment column using `minmax(0, 1.9fr) minmax(320px, 1fr)` and a 48px gap. Service shortcuts form three ruled columns before the call stage. The transcript stays within its own scrollable 145px region; new messages scroll that region rather than moving the page.
 
-The call stage has intentional breathing room; the transcript remains bounded and scrollable. Quick utterances form two columns below the workspace, followed by the expandable decision inspector. Spacing draws from the frontmatter scale with component-specific adjustments; it is not a strict all-values grid.
+Quick requests form four ruled columns below the workspace, followed by the native-disclosure decision inspector. The Your appointments view uses divided booking rows containing service, date/time, reference, and management actions. It shares the same header and page shell.
 
-At 1180px, padding tightens and the brand caption disappears. At 850px, navigation hides, the appointment minimum narrows, and inspector metadata reflows. At 650px, the workspace stacks call/conversation before appointment details, quick utterances become one column, and inspector grids stack. Mobile uses 16px page gutters, larger message/appointment text, and a 16px composer input. The reset action retains an accessible label when its visible text hides.
+At 1120px, the reception gap narrows to 28px, columns rebalance, and supporting header captions disappear. At 800px, navigation moves onto a visible full-width second row; the reception becomes one column, quick requests become two columns, and booking rows reflow. At 440px, gutters become 18px, quick requests and booking actions become one column, and the composer input grows for mobile use. Above 1600px, the content top padding increases.
 
-**The Task First Rule.** Keep the call controls and conversation before the appointment ticket in reading order; put technical evidence after the caller's task.
+**The Task First Rule.** Keep call controls and conversation before appointment details in reading order, and place technical evidence after the caller's task.
 
 ## Elevation & Depth
 
-The shipped system has no box-shadow vocabulary. Depth comes from the cool page canvas, white working surfaces, a subtly tinted appointment panel, hairline borders, and the profile strip. Do not add floating-card shadows to recreate boundaries the dividers already express.
+There are no box shadows. Depth comes from the canvas/surface/raised tonal stack, fine borders, and deliberate whitespace. The call stage and appointment panel are bounded working regions; service choices, requests, and appointment lists rely on ruled divisions. No gradients, glows, physical-metal effects, or photographic assets are required by this world.
 
-**The Flat Reception Rule.** Separate regions with surface tone, whitespace, and fine dividers rather than ornamental elevation.
+**The Matte Surface Rule.** Separate regions through tone, spacing, and fine borders rather than ornamental elevation.
 
 ## Shapes
 
-Controls have gently rounded corners; larger containers receive proportionately broader corners using the frontmatter radius scale. The desktop workspace uses the shell radius and the mobile shell uses the panel radius. Circular avatars, small status dots, and the headset medallion are functional exceptions. Icons are consistent stroked SVGs, not text glyphs.
+Controls and avatars use gently rounded corners; fields, inspector panels, and larger working stages use the frontmatter radius steps. Small circular status dots and the narrow waveform bars are functional exceptions. Lucide provides consistent stroked SVG icons; the local SVG favicon and header mark share the brass monogram identity. Icons supplement visible labels and accessible names.
 
 ## Components
 
 ### Buttons
 
-Confident, compact controls with clear labels. Primary buttons use blue with white text; secondary buttons use a white surface, blue text, and a pale blue border. Text buttons remain visually quiet for reset, cancellation, and rejecting a proposal. The minimum primary/text control height is 44px; icon-only buttons are at least 44px in both dimensions. Hover changes color over 180ms; enabled primary buttons move down 1px while pressed. Disabled controls reduce opacity and use a non-interactive cursor.
-
-All applicable controls show the shared visible focus outline (3px solid `#3578c7`, offset 4px). A skip link provides direct keyboard entry to the main workspace.
+Primary actions use brass with canvas-colored text and the shared control radius. Secondary actions use raised charcoal, warm text, and a fine divider border; text actions remain muted until hover. Button/text/icon controls have a minimum height of 44px; icon controls are at least 44px wide. Disabled controls use 45% opacity and a non-interactive cursor. Background and color transitions last 180ms. Shared keyboard focus is a 2px brass outline with 5px offset; the skip link exposes direct access to main content.
 
 ### Chips
 
-Quick utterances are full sentence action buttons rather than filter pills. They use the control radius, a fine border, a trailing arrow, and a pale blue hover surface. Their minimum height is 48px on desktop and 52px on mobile. Activation sends the displayed utterance through the same turn pipeline as typing or speech.
+Quick-request buttons are divided sentence rows with a brass icon, not rounded filter pills. Their group changes from four to two to one column. Service shortcuts are three adjacent ruled buttons with service/duration labels. Both send real utterances through the same pipeline as speech and typing.
 
 ### Cards / Containers
 
-Use the flat surface and border treatment described above. The reception shell contains joined task regions, not a collection of unrelated floating cards. The inspector uses the panel radius and a generous disclosure row; the appointment details use definition-list rows with fine top dividers.
+Call stage and appointment panel use the surface color, divider border, and stage radius. The appointment panel uses 25px desktop padding, narrowing at smaller breakpoints. Inspector and grouped appointment rows use the panel radius. Appointment facts remain definition-list rows; a proposal, existing booking, and completed change have distinct text and status treatment.
 
 ### Inputs / Fields
 
-The composer is a white, rounded border enclosure with a flexible text input and a blue send control. Focus within shifts the enclosure border to blue; the input has an accessible label. Mobile text input remains 16px. The speech-source select uses the same restrained border language and a minimum 44px interactive height. Warning and recoverable error notices remain inline with the workspace.
+The composer is a dark bordered enclosure with a flexible input and square brass send control. Focus within shifts the enclosure border to brass. Speech-source and reply-voice selects have explicit labels, a minimum 44px height, dark option surfaces, and SVG chevrons. Type instead focuses the composer as an available alternative to starting a call. Errors and reset confirmation remain inline and recoverable.
 
 ### Navigation
 
-Desktop navigation uses muted text, darker active text, and a thin blue underline. Links retain a minimum 44px height. At the intermediate breakpoint, navigation disappears while the brand, isolated-demo marker, and reset control remain. Do not fabricate additional customer-management destinations from the reference mock.
+Reception and Your appointments are actual hash-navigable views. The active link uses brass text and a thin matching underline; the appointment count is a small raised badge. Mobile retains both destinations in the header's second row. Navigating to appointments pauses voice interaction; management actions return to reception with a specific owned reference for explicit review.
 
 ### Voice stage and decision inspector
 
-The waveform is a CSS status illustration, not a measured microphone waveform. Its bars remain still when idle and animate only for active controller states. The visible status and control labels carry the actual interaction meaning. Motion respects reduced-motion preferences; color/control transitions are short, and waveform animation reflects listening, speaking, or processing.
-
-The native disclosure inspector presents actual state transitions, matched rules, extracted entities, validation, action, and revision. It shows an honest empty state before a request. Never substitute invented confidence scores or a fabricated reasoning narrative.
+The waveform illustrates controller status rather than measured audio amplitude. Bars animate only while listening or speaking; text carries the actual status. Reduced-motion preferences suppress animation and smooth scrolling. The native disclosure shows the actual state, matched rules, entities, validation, action, and revision, with an honest empty state before a request.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** use the recorded blue/slate palette and user-approved local system sans.
-- **Do** preserve visible focus, meaningful status text, disabled states, and at least 44px primary control targets.
-- **Do** distinguish a pending proposal from a confirmed appointment and require explicit confirmation.
-- **Do** render dates, duration, booking ownership, and decision traces from the actual API response.
-- **Do** keep the mobile composer readable and respect reduced-motion preferences.
+- **Do** use matte charcoal, warm brass, self-hosted Manrope, and coherent SVG icons.
+- **Do** retain visible mobile destinations, visible keyboard focus, readable inputs, and 44px primary control targets.
+- **Do** distinguish proposals from confirmed appointments and require explicit confirmation.
+- **Do** render appointment facts and decision traces from actual session-scoped API data.
+- **Do** keep transcript scrolling local and respect reduced-motion preferences.
 
 ### Don't:
 
-- **Don't** import the generic red CTA or remote-font recommendations over the approved reception overrides.
-- **Don't** copy invented customer, address, vehicle, duration, or confirmation facts from the mock.
-- **Don't** replace structural borders with ornamental shadows or turn every detail into a separate card.
-- **Don't** treat decorative waveform bars as measured audio or imply an LLM made a booking decision.
-- **Don't** collect real personal, registration, or payment information in this fictional simulation.
+- **Don't** reintroduce the superseded white/blue theme or generic marketing-page styling.
+- **Don't** add gradients, glows, metallic effects, or ornamental panel shadows.
+- **Don't** treat illustrative waveform bars as measured audio or invent confidence scores.
+- **Don't** infer provider, microphone, hosting, or accessibility-conformance verification from visual source inspection.
+- **Don't** collect real contact, registration, or payment information in this fictional simulation.
 
 ## Technical appendix: deterministic reception brain
 
