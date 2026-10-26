@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T13:22:08Z",
+  "title": "Design System: Bayline Service Reception",
+  "extensions": {
+    "colorMeta": {
+      "blue": {
+        "role": "primary",
+        "displayName": "Reception Blue",
+        "tonalRamp": [
+          "oklch(15.00% 0.11012 251.02)",
+          "oklch(26.43% 0.11012 251.02)",
+          "oklch(37.86% 0.11012 251.02)",
+          "oklch(49.29% 0.11012 251.02)",
+          "oklch(60.71% 0.11012 251.02)",
+          "oklch(72.14% 0.11012 251.02)",
+          "oklch(83.57% 0.11012 251.02)",
+          "oklch(95.00% 0.11012 251.02)"
+        ]
+      },
+      "blue-hover": {
+        "role": "primary",
+        "displayName": "Pressed Blue",
+        "tonalRamp": [
+          "oklch(15.00% 0.10282 251.44)",
+          "oklch(26.43% 0.10282 251.44)",
+          "oklch(37.86% 0.10282 251.44)",
+          "oklch(49.29% 0.10282 251.44)",
+          "oklch(60.71% 0.10282 251.44)",
+          "oklch(72.14% 0.10282 251.44)",
+          "oklch(83.57% 0.10282 251.44)",
+          "oklch(95.00% 0.10282 251.44)"
+        ]
+      },
+      "blue-tint": {
+        "role": "primary",
+        "displayName": "Quiet Blue",
+        "tonalRamp": [
+          "oklch(15.00% 0.01030 247.93)",
+          "oklch(26.43% 0.01030 247.93)",
+          "oklch(37.86% 0.01030 247.93)",
+          "oklch(49.29% 0.01030 247.93)",
+          "oklch(60.71% 0.01030 247.93)",
+          "oklch(72.14% 0.01030 247.93)",
+          "oklch(83.57% 0.01030 247.93)",
+          "oklch(95.00% 0.01030 247.93)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Cool Canvas",
+        "tonalRamp": [
+          "oklch(15.00% 0.00453 258.32)",
+          "oklch(26.43% 0.00453 258.32)",
+          "oklch(37.86% 0.00453 258.32)",
+          "oklch(49.29% 0.00453 258.32)",
+          "oklch(60.71% 0.00453 258.32)",
+          "oklch(72.14% 0.00453 258.32)",
+          "oklch(83.57% 0.00453 258.32)",
+          "oklch(95.00% 0.00453 258.32)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Reception White",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95.00% 0.00000 0.00)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.04457 252.13)",
+          "oklch(26.43% 0.04457 252.13)",
+          "oklch(37.86% 0.04457 252.13)",
+          "oklch(49.29% 0.04457 252.13)",
+          "oklch(60.71% 0.04457 252.13)",
+          "oklch(72.14% 0.04457 252.13)",
+          "oklch(83.57% 0.04457 252.13)",
+          "oklch(95.00% 0.04457 252.13)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Slate Secondary",
+        "tonalRamp": [
+          "oklch(15.00% 0.04098 249.87)",
+          "oklch(26.43% 0.04098 249.87)",
+          "oklch(37.86% 0.04098 249.87)",
+          "oklch(49.29% 0.04098 249.87)",
+          "oklch(60.71% 0.04098 249.87)",
+          "oklch(72.14% 0.04098 249.87)",
+          "oklch(83.57% 0.04098 249.87)",
+          "oklch(95.00% 0.04098 249.87)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Fine Divider",
+        "tonalRamp": [
+          "oklch(15.00% 0.01149 252.09)",
+          "oklch(26.43% 0.01149 252.09)",
+          "oklch(37.86% 0.01149 252.09)",
+          "oklch(49.29% 0.01149 252.09)",
+          "oklch(60.71% 0.01149 252.09)",
+          "oklch(72.14% 0.01149 252.09)",
+          "oklch(83.57% 0.01149 252.09)",
+          "oklch(95.00% 0.01149 252.09)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Task introduction; fixed 33px mobile override."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section hierarchy; compact local panel variations."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base reading rhythm; 16px mobile override."
+      },
+      "conversation": {
+        "displayName": "Conversation",
+        "purpose": "Transcript, maximum 72ch; 14px mobile override."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "180ms",
+        "purpose": "Button background, active movement, navigation text, and quick-utterance feedback."
+      },
+      {
+        "name": "composer-focus",
+        "value": "200ms",
+        "purpose": "Composer border-color feedback; inspector chevron rotation also uses 200ms."
+      },
+      {
+        "name": "waveform-transition",
+        "value": "background 250ms, transform 300ms",
+        "purpose": "Waveform visual state changes."
+      },
+      {
+        "name": "voice-wave",
+        "value": "950ms ease-in-out infinite alternate",
+        "purpose": "Listening/speaking bar scale animation from 0.3 to 1."
+      },
+      {
+        "name": "processing-wave",
+        "value": "1400ms ease-in-out infinite alternate",
+        "purpose": "Processing waveform; opacity reduced to 0.6."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable animation and transitions and use automatic scrolling."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1550px"
+      },
+      {
+        "name": "compact-max",
+        "value": "1180px"
+      },
+      {
+        "name": "tablet-max",
+        "value": "850px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "650px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Blue call or confirmation action with a minimum 44px height.",
+      "html": "<button class=\"ds-primary\">Start a call</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;border-radius:8px;border:0;font-size:13px;font-weight:550;padding:11px 18px;cursor:pointer;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);transition:background 180ms,transform 180ms;background:var(--blue,#245e97);color:#fff}.ds-primary:hover:not(:disabled){background:var(--blue-hover,#194e82)}.ds-primary:active:not(:disabled){transform:translateY(1px)}.ds-primary:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-primary:disabled{opacity:.45;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary,.ds-text,.ds-quick,.ds-composer{transition:none}.ds-primary:active,.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet outlined action, used for rescheduling and secondary call controls.",
+      "html": "<button class=\"ds-secondary\">Reschedule</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;border-radius:8px;border:0;font-size:13px;font-weight:550;padding:11px 18px;cursor:pointer;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);transition:background 180ms,transform 180ms;background:#fff;color:var(--blue,#245e97);border:1px solid #cad8e5}.ds-secondary:hover:not(:disabled){background:var(--blue-tint,#edf3f9)}.ds-secondary:active:not(:disabled){transform:translateY(1px)}.ds-secondary:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-secondary:disabled{opacity:.45;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary,.ds-text,.ds-quick,.ds-composer{transition:none}.ds-primary:active,.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Low-emphasis reset, cancellation, or rejection action.",
+      "html": "<button class=\"ds-text\">Cancel appointment</button>",
+      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:transparent;color:var(--muted,#596d82);padding:9px 0;min-height:44px;font-size:12px;font-weight:550;border:0;cursor:pointer;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);transition:color 180ms}.ds-text:hover{color:var(--blue,#245e97)}.ds-text:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-text:disabled{opacity:.45;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary,.ds-text,.ds-quick,.ds-composer{transition:none}.ds-primary:active,.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Transcript Composer",
+      "kind": "input",
+      "refersTo": "field-composer",
+      "description": "Flexible text fallback and send control; grows input text to 16px on mobile.",
+      "html": "<form class=\"ds-composer\" onsubmit=\"return false\"><input class=\"ds-message-input\" aria-label=\"Message to Bayline\" placeholder=\"Prefer to type? Send a message…\"><button type=\"button\" class=\"ds-send\" aria-label=\"Send message\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m22 2-7 20-4-9-9-4 20-7Z\"/><path d=\"M22 2 11 13\"/></svg></button></form>",
+      "css": ".ds-composer{display:flex;align-items:center;gap:8px;padding:7px;border:1px solid #cdd8e2;border-radius:10px;background:#fff;transition:border-color 200ms}.ds-composer:focus-within{border-color:#558ab8}.ds-message-input{min-width:0;flex:1;border:0;background:transparent;padding:8px 9px;outline:none;color:var(--ink,#15273b);font-size:13px;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);}.ds-message-input::placeholder{color:#65778b}.ds-send{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;background:var(--blue,#245e97);border-radius:7px;border:0;cursor:pointer}.ds-send:hover:not(:disabled){background:var(--blue-hover,#194e82)}.ds-send:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-send:disabled{opacity:.45;cursor:not-allowed}@media(max-width:650px){.ds-message-input{font-size:16px;padding-left:6px}}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary,.ds-text,.ds-quick,.ds-composer{transition:none}.ds-primary:active,.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Reception Navigation",
+      "kind": "nav",
+      "description": "Muted links with an active blue underline; hidden below 850px in the shipped header.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Demo preview navigation\"><a class=\"ds-nav-active\" href=\"#reception\" aria-current=\"page\">Reception</a><a href=\"#appointments\">Your appointments</a></nav>",
+      "css": ".ds-nav{display:flex;gap:25px;align-items:stretch;height:64px;font-size:13px;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);}.ds-nav a{position:relative;display:flex;align-items:center;min-height:44px;color:var(--muted,#596d82);text-decoration:none;transition:color 180ms}.ds-nav a:hover{color:var(--blue,#245e97)}.ds-nav .ds-nav-active{color:var(--ink,#15273b);font-weight:600}.ds-nav-active:after{content:'';position:absolute;height:2px;bottom:-1px;left:0;right:0;background:var(--blue,#245e97)}.ds-nav a:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+    },
+    {
+      "name": "Quick Utterance",
+      "kind": "chip",
+      "refersTo": "chip-utterance",
+      "description": "A full utterance action that shares the typed/speech turn pipeline.",
+      "html": "<button class=\"ds-quick\"><span>What time do you close?</span><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-quick{display:flex;width:100%;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border:1px solid var(--line,#e1e7ee);background:#fff;border-radius:8px;text-align:left;font-size:12px;color:#3e5770;min-height:48px;cursor:pointer;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);transition:background 180ms,border-color 180ms}.ds-quick svg{flex-shrink:0;color:#6e8da7}.ds-quick:hover:not(:disabled){background:var(--blue-tint,#edf3f9);border-color:#b6cce0}.ds-quick:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-quick:disabled{opacity:.45;cursor:not-allowed}@media(max-width:650px){.ds-quick{font-size:13px;min-height:52px;padding:13px 15px}}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary,.ds-text,.ds-quick,.ds-composer{transition:none}.ds-primary:active,.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Decision Inspector",
+      "kind": "card",
+      "refersTo": "panel-inspector",
+      "description": "Flat native disclosure for actual Python decision evidence, with an honest empty state.",
+      "html": "<details class=\"ds-inspector\"><summary><span><strong>How the assistant decided</strong><small>Real rules. Visible state. Every turn explained.</small></span><svg class=\"ds-chevron\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><div class=\"ds-inspector-body\">Send a request to inspect the matched Python rules, extracted details, and resulting action.</div></details>",
+      "css": ".ds-inspector{background:#fff;border:1px solid var(--line,#e1e7ee);border-radius:12px;overflow:hidden;color:var(--ink,#15273b);font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);}.ds-inspector summary{display:flex;align-items:center;gap:14px;padding:19px 23px;cursor:pointer;list-style:none;min-height:72px}.ds-inspector summary::-webkit-details-marker{display:none}.ds-inspector summary:focus-visible{outline:3px solid #3578c7;outline-offset:4px;}.ds-inspector strong{font-size:13px;font-weight:650}.ds-inspector small{display:block;color:var(--muted,#596d82);font-size:11px;margin-top:2px}.ds-chevron{color:#6c8399;margin-left:auto;transition:transform 200ms}.ds-inspector[open] .ds-chevron{transform:rotate(180deg)}.ds-inspector-body{padding:22px 24px;border-top:1px solid var(--line,#e1e7ee);font-size:12px;color:#6a8197}@media(max-width:650px){.ds-inspector summary{padding:16px;gap:10px}.ds-inspector small{font-size:10px}.ds-inspector-body{padding:18px}}@media(prefers-reduced-motion:reduce){.ds-chevron{transition:none}}"
+    },
+    {
+      "name": "Voice Status Bars",
+      "kind": "custom",
+      "description": "Idle CSS waveform illustration. Live app state enables motion; these bars do not measure microphone amplitude.",
+      "html": "<div class=\"ds-waveform\" role=\"img\" aria-label=\"Voice status illustration, idle\"><span style=\"height:14px\"></span><span style=\"height:20px\"></span><span style=\"height:27px\"></span><span style=\"height:18px\"></span><span style=\"height:31px\"></span><span style=\"height:22px\"></span><span style=\"height:37px\"></span><span style=\"height:26px\"></span><span style=\"height:44px\"></span><span style=\"height:28px\"></span><span style=\"height:36px\"></span><span style=\"height:21px\"></span><span style=\"height:31px\"></span><span style=\"height:20px\"></span><span style=\"height:25px\"></span><span style=\"height:17px\"></span><span style=\"height:23px\"></span></div>",
+      "css": ".ds-waveform{height:101px;display:flex;align-items:center;justify-content:center;gap:4px;max-width:370px;margin:10px auto 0}.ds-waveform span{display:block;width:3px;border-radius:3px;background:#9db8d3;transform:scaleY(.56);transition:background 250ms,transform 300ms}.ds-waveform span:nth-child(n+5):nth-child(-n+13){background:#3e75aa}@media(prefers-reduced-motion:reduce){.ds-waveform span{transition:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calm Service Reception",
+    "overview": "Bayline turns a spoken vehicle-service request into a reviewed appointment. Its white surfaces, slate text, restrained blue controls, and precise dividers convey an orderly reception desk. Crisp system typography is an explicit user-approved choice, with no remote font dependency. Generous space around the call controls balances compact appointment details and conversation rows.\n\nThe product serves fictional callers booking, rescheduling, or cancelling car and SUV services. Every browser owns an isolated two-bay workshop and the fictional Alex Rivera profile. The caller's task stays primary; an expandable inspector exposes the actual Python decisions. No real contact, registration, or payment details belong in this experience.\n\nThis record describes the shipped React interface in `frontend/src/tokens.css`, `frontend/src/styles.css`, and `frontend/src/App.tsx`, checked against the desktop and mobile captures in `artifacts/`. The approved reception overrides in `design-system/bayline/pages/reception.md` take precedence over generic generated recommendations. The reference mock supplies composition, not fictional booking facts to copy.",
+    "keyCharacteristics": [
+      "White working surfaces on a cool slate canvas.",
+      "Restrained blue actions and flat, finely divided panels.",
+      "Clear call status, readable conversation, and a prominent appointment time.",
+      "Confirmation before changes, with actual decision evidence available on demand."
+    ],
+    "rules": [
+      {
+        "name": "The Action Blue Rule",
+        "body": "Use blue to identify an available action or a current proposal; keep most working surfaces white or neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Task First Rule",
+        "body": "Keep the call controls and conversation before the appointment ticket in reading order; put technical evidence after the caller's task.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Reception Rule",
+        "body": "Separate regions with surface tone, whitespace, and fine dividers rather than ornamental elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** use the recorded blue/slate palette and user-approved local system sans.",
+      "**Do** preserve visible focus, meaningful status text, disabled states, and at least 44px primary control targets.",
+      "**Do** distinguish a pending proposal from a confirmed appointment and require explicit confirmation.",
+      "**Do** render dates, duration, booking ownership, and decision traces from the actual API response.",
+      "**Do** keep the mobile composer readable and respect reduced-motion preferences."
+    ],
+    "donts": [
+      "**Don't** import the generic red CTA or remote-font recommendations over the approved reception overrides.",
+      "**Don't** copy invented customer, address, vehicle, duration, or confirmation facts from the mock.",
+      "**Don't** replace structural borders with ornamental shadows or turn every detail into a separate card.",
+      "**Don't** treat decorative waveform bars as measured audio or imply an LLM made a booking decision.",
+      "**Don't** collect real personal, registration, or payment information in this fictional simulation."
+    ]
+  }
+}

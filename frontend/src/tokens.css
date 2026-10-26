@@ -1,0 +1,10 @@
+:root {
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --canvas: #f5f7fa;
+  --ink: #15273b;
+  --muted: #596d82;
+  --line: #e1e7ee;
+  --blue: #245e97;
+  --blue-hover: #194e82;
+  --blue-tint: #edf3f9;
+}
