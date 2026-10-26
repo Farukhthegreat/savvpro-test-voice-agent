@@ -8,7 +8,7 @@ Date: 26 October 2026 (PKT). Update this record from actual runs before submissi
 | Ruff | Passed |
 | Mypy backend | Passed |
 | TypeScript and production Vite build | Passed |
-| Vitest | 25 passed on Windows after playback/reveal fixes; preceding 10-test suite also passed on Linux |
+| Vitest | 28 passed on Windows after appointment update checks; preceding 10-test suite also passed on Linux |
 | Real backend browser smoke | Passed: alternatives, booking, multi-appointment selection, rescheduling, cancellation, reset |
 | Desktop 1440px / mobile 390px | Rendered, screenshots captured; no horizontal overflow at mobile size |
 | Browser JavaScript errors during smoke | None |
@@ -50,3 +50,11 @@ The final hosted browser smoke passed on the fresh-call greeting build (runtime 
 ## Candidate confirmation - 2026-10-26 21:26 PKT
 
 The candidate answered "Yes, both work" after refreshing the public app in desktop Chrome and clicking "What time do you close?" without starting a call: the reply was audible and its words revealed progressively. This confirms the reported test-drive playback/animation fix on the candidate's device. It does not establish optional Groq verification or a new end-to-end microphone workflow check.
+
+
+## Immediate confirmed schedule updates
+
+- 28 frontend tests, TypeScript/production build, and local actual-Neon browser smoke pass. Tests hold speech unfinished while asserting updated appointment cards/lists/counts, preserve the original before confirmation, and retain it on failed rescheduling.
+- Desktop smoke checks the rescheduled reference/new time, removal of the cancelled reference, and the active count without reload. Mobile smoke confirms a reschedule and checks the new slot and no horizontal overflow.
+- Added actual-data status feedback near the conversation and on the appointments page; fixed handled-anchor default navigation racing with rapid view changes. Backend code and transactional confirmation semantics are unchanged.
+- Deployment/hosted verification of this revision is pending.

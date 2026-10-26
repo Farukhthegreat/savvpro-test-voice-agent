@@ -179,6 +179,8 @@ Reception and Your appointments are actual hash-navigable views. The active link
 
 ### Voice stage and decision inspector
 
+Confirmed booking changes appear in a flat, divided status row beside the conversation and in the appointments view. It names the actual service, date/time, reference, and committed action, with a View updated schedule action at reception. Keep it tied to the returned server state; never present a proposal as committed or wait for speech to update the schedule.
+
 Fresh conversation text reveals with 180ms word fades and delays capped at 600ms; live recognition changes use 100ms fades. These are visual presentations of actual text, not generated-token streaming. Assistive technology receives the complete text once, and reduced motion disables the reveal. Test-drive chips bring the conversation into view; history remains immediate on session initialization.
 
 The waveform illustrates controller status rather than measured audio amplitude. Bars animate only while listening or speaking; text carries the actual status. Reduced-motion preferences suppress animation and smooth scrolling. The native disclosure shows the actual state, matched rules, entities, validation, action, and revision, with an honest empty state before a request.

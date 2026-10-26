@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { FormEvent, MouseEvent } from 'react'
 import {
   ArrowRight,
   AudioLines,
@@ -136,7 +136,13 @@ export default function App() {
     window.scrollTo?.({ top: 0, behavior: 'instant' })
   }, [view])
 
-  const navigate = (next: 'reception' | 'appointments') => {
+  const navigate = (next: 'reception' | 'appointments', event?: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event &&
+      (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0)
+    )
+      return
+    event?.preventDefault()
     if (next === 'appointments') voice.current?.pause()
     window.location.hash = next
     setView(next)
@@ -353,7 +359,7 @@ export default function App() {
         <a
           className="brand"
           href="#reception"
-          onClick={() => navigate('reception')}
+          onClick={(event) => navigate('reception', event)}
           aria-label="Bayline home"
         >
           <img src="/favicon.svg" alt="" width="38" height="38" />
@@ -366,7 +372,7 @@ export default function App() {
             className={view === 'reception' ? 'nav-active' : ''}
             aria-current={view === 'reception' ? 'page' : undefined}
             href="#reception"
-            onClick={() => navigate('reception')}
+            onClick={(event) => navigate('reception', event)}
           >
             <Headphones size={17} /> Reception
           </a>
@@ -374,7 +380,7 @@ export default function App() {
             className={view === 'appointments' ? 'nav-active' : ''}
             aria-current={view === 'appointments' ? 'page' : undefined}
             href="#appointments"
-            onClick={() => navigate('appointments')}
+            onClick={(event) => navigate('appointments', event)}
           >
             <CalendarDays size={17} />
             Your appointments<span className="nav-count">{session?.appointments.length ?? 0}</span>
@@ -466,6 +472,9 @@ export default function App() {
                 <span>Fictional demo profile · Only bookings from this session</span>
               </div>
             </div>
+            {session?.state.phase === 'COMPLETED' && (
+              <AppointmentChange appointment={session.state.appointment} action={trace?.action} />
+            )}
             {loading ? (
               <div className="loading-state">
                 <Loader2 className="spinner" size={20} />
@@ -553,7 +562,11 @@ export default function App() {
               Changes are reviewed at reception. Nothing is rescheduled or cancelled until you
               confirm.
             </p>
-            <a className="back-link" href="#reception" onClick={() => navigate('reception')}>
+            <a
+              className="back-link"
+              href="#reception"
+              onClick={(event) => navigate('reception', event)}
+            >
               <Headphones size={17} />
               {callStarted ? 'Return to your paused call' : 'Back to reception'}
               <ArrowRight size={16} />
@@ -766,6 +779,13 @@ export default function App() {
                     </button>
                   )}
                 </div>
+                {session?.state.phase === 'COMPLETED' && (
+                  <AppointmentChange
+                    appointment={session.state.appointment}
+                    action={trace?.action}
+                    onView={() => navigate('appointments')}
+                  />
+                )}
                 <div
                   className="transcript"
                   role="log"
@@ -1001,17 +1021,6 @@ export default function App() {
                     ))}
                   </div>
                 )}
-                {session?.state.appointment && session.state.phase === 'COMPLETED' && (
-                  <div className="success-note" role="status">
-                    <CheckCircle2 size={17} />
-                    <span>
-                      {session.state.appointment.status === 'cancelled'
-                        ? 'Appointment cancelled.'
-                        : 'Your appointment is confirmed.'}{' '}
-                      Your schedule is up to date.
-                    </span>
-                  </div>
-                )}
                 <div className="workshop-info">
                   <h3>
                     <Clock3 size={15} />
@@ -1038,7 +1047,7 @@ export default function App() {
                 <a
                   className="view-all-link"
                   href="#appointments"
-                  onClick={() => navigate('appointments')}
+                  onClick={(event) => navigate('appointments', event)}
                 >
                   View all appointments <ArrowRight size={16} />
                 </a>
@@ -1171,6 +1180,48 @@ export default function App() {
           </span>
         </footer>
       </main>
+    </div>
+  )
+}
+
+function AppointmentChange({
+  appointment,
+  action,
+  onView,
+}: {
+  appointment?: Appointment
+  action?: string
+  onView?: () => void
+}) {
+  const labels: Record<string, string> = {
+    booked: 'Appointment booked',
+    rescheduled: 'Appointment rescheduled',
+    cancelled: 'Appointment cancelled',
+  }
+  const label = action && labels[action]
+  if (!appointment || !label) return null
+  return (
+    <div className="schedule-update" role="status" aria-label="Schedule update">
+      <CheckCircle2 size={18} />
+      <div>
+        <strong>{label}</strong>
+        <span>
+          {appointment.service_name} · {prettyDate(appointment.date)} at{' '}
+          {prettyTime(appointment.time)}
+        </span>
+        <small>
+          Reference {appointment.reference}
+          {action === 'cancelled'
+            ? ' · Removed from your upcoming appointments.'
+            : ' · Your schedule is up to date.'}
+        </small>
+      </div>
+      {onView && (
+        <button className="text-button" onClick={onView}>
+          View updated schedule
+          <ArrowRight size={14} />
+        </button>
+      )}
     </div>
   )
 }

@@ -34,6 +34,33 @@ const trace = {
   action: 'none',
 }
 
+function mockTurnResults(results: unknown[]) {
+  const fallback = vi.mocked(fetch)
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string, options?: RequestInit) =>
+      url === '/api/turn'
+        ? { ok: true, json: async () => results.shift() }
+        : fallback(url, options),
+    ),
+  )
+}
+
+function holdSpeechPlayback() {
+  const speak = vi.fn()
+  vi.stubGlobal('speechSynthesis', { cancel: vi.fn(), getVoices: () => [], speak })
+  vi.stubGlobal(
+    'SpeechSynthesisUtterance',
+    class {
+      text: string
+      constructor(text: string) {
+        this.text = text
+      }
+    },
+  )
+  return speak
+}
+
 beforeEach(() => {
   window.history.replaceState(null, '', '/')
   vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
@@ -325,4 +352,133 @@ it('keeps a delayed API reply silent after navigating away from reception', asyn
   })
   await waitFor(() => expect(screen.getByRole('button', { name: 'Reschedule' })).toBeEnabled())
   expect(speak).not.toHaveBeenCalled()
+})
+
+it('updates a rescheduled booking everywhere immediately, before speech ends', async () => {
+  const speak = holdSpeechPlayback()
+  const moved = { ...appointment, date: '2026-10-29', time: '15:00' }
+  mockTurnResults([
+    {
+      revision: 1,
+      state: {
+        phase: 'CONFIRMING',
+        intent: 'RESCHEDULE',
+        slots: { service: 'tyre_rotation', vehicle: 'suv', date: moved.date, time: moved.time },
+      },
+      appointments: [appointment],
+      reply: 'Move your tyre rotation to Thursday at three PM?',
+      trace: { ...trace, intent: 'RESCHEDULE', action: 'none' },
+    },
+    {
+      revision: 2,
+      state: { phase: 'COMPLETED', appointment: moved },
+      appointments: [moved],
+      reply: 'Your appointment has been rescheduled.',
+      trace: { ...trace, intent: 'RESCHEDULE', action: 'rescheduled' },
+    },
+  ])
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.change(screen.getByRole('textbox', { name: 'Type your message' }), {
+    target: { value: 'Reschedule to Thursday at 3 PM' },
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+  await screen.findByRole('button', { name: 'Confirm appointment' })
+  fireEvent.click(screen.getByRole('link', { name: /Your appointments/ }))
+  expect(within(screen.getByRole('article')).getByText('11:00 AM')).toBeInTheDocument()
+  expect(within(screen.getByRole('article')).queryByText('3:00 PM')).not.toBeInTheDocument()
+  fireEvent.click(screen.getByRole('link', { name: 'Reception' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm appointment' }))
+  await screen.findByText('Appointment rescheduled')
+  const summary = screen.getByRole('complementary', { name: 'Next appointment summary' })
+  expect(within(summary).getByText('3:00 PM')).toBeInTheDocument()
+  expect(within(summary).queryByText('11:00 AM')).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Stop reply' })).toBeInTheDocument()
+  expect(speak).toHaveBeenCalledTimes(2)
+  fireEvent.click(screen.getByRole('button', { name: /View updated schedule/ }))
+  expect(within(screen.getByRole('article')).getByText('3:00 PM')).toBeInTheDocument()
+  expect(vi.mocked(fetch).mock.calls.filter(([url]) => url === '/api/session')).toHaveLength(1)
+})
+
+it('removes a confirmed cancellation from the card, list and count before speech ends', async () => {
+  holdSpeechPlayback()
+  mockTurnResults([
+    {
+      revision: 1,
+      state: {
+        phase: 'CONFIRMING',
+        intent: 'CANCEL',
+        slots: {
+          service: 'tyre_rotation',
+          vehicle: 'suv',
+          date: appointment.date,
+          time: appointment.time,
+        },
+      },
+      appointments: [appointment],
+      reply: 'Cancel your tyre rotation?',
+      trace: { ...trace, intent: 'CANCEL', action: 'none' },
+    },
+    {
+      revision: 2,
+      state: { phase: 'COMPLETED', appointment: { ...appointment, status: 'cancelled' } },
+      appointments: [],
+      reply: 'Your appointment has been cancelled.',
+      trace: { ...trace, intent: 'CANCEL', action: 'cancelled' },
+    },
+  ])
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.click(screen.getByRole('button', { name: 'Cancel appointment' }))
+  await screen.findByRole('button', { name: 'Confirm cancellation' })
+  expect(
+    within(screen.getByRole('link', { name: /Your appointments/ })).getByText('1'),
+  ).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm cancellation' }))
+  await screen.findByText('Appointment cancelled')
+  const summary = screen.getByRole('complementary', { name: 'Next appointment summary' })
+  expect(within(summary).getByText('A clear schedule.')).toBeInTheDocument()
+  expect(within(summary).queryByText('11:00 AM')).not.toBeInTheDocument()
+  expect(
+    within(screen.getByRole('link', { name: /Your appointments/ })).getByText('0'),
+  ).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Stop reply' })).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: /View updated schedule/ }))
+  expect(screen.queryByRole('article')).not.toBeInTheDocument()
+  expect(screen.getByText('No upcoming appointments.')).toBeInTheDocument()
+})
+
+it('keeps the original schedule when a reschedule cannot be committed', async () => {
+  mockTurnResults([
+    {
+      revision: 1,
+      state: {
+        phase: 'CONFIRMING',
+        intent: 'RESCHEDULE',
+        slots: { service: 'tyre_rotation', vehicle: 'suv', date: '2026-10-29', time: '15:00' },
+      },
+      appointments: [appointment],
+      reply: 'Move to Thursday at three?',
+      trace,
+    },
+    {
+      revision: 2,
+      state: { phase: 'COLLECTING', intent: 'RESCHEDULE' },
+      appointments: [appointment],
+      reply: 'That slot became unavailable. Your original booking is unchanged.',
+      trace: { ...trace, action: 'none', validation: ['both_bays_occupied'] },
+    },
+  ])
+  render(<App />)
+  await screen.findByText('11:00 AM')
+  fireEvent.change(screen.getByRole('textbox', { name: 'Type your message' }), {
+    target: { value: 'Move to Thursday at 3 PM' },
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+  await screen.findByRole('button', { name: 'Confirm appointment' })
+  fireEvent.click(screen.getByRole('button', { name: 'Confirm appointment' }))
+  await screen.findByText('That slot became unavailable. Your original booking is unchanged.')
+  expect(screen.queryByRole('status', { name: 'Schedule update' })).not.toBeInTheDocument()
+  fireEvent.click(screen.getByRole('link', { name: /Your appointments/ }))
+  expect(within(screen.getByRole('article')).getByText('11:00 AM')).toBeInTheDocument()
 })

@@ -15,7 +15,7 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 ## Progress
 
 - Repository, rules, environment, backend, interface, and assessment documentation implemented.
-- 100 pytest cases pass across SQLite and Postgres on Windows; preceding 98-test suite passed on Linux; backend coverage 91%. Type/lint and production build pass. 25 Vitest tests pass on Windows; preceding 10-test suite passed on Linux.
+- 100 pytest cases pass across SQLite and Postgres on Windows; preceding 98-test suite passed on Linux; backend coverage 91%. Type/lint and production build pass. 28 Vitest tests pass on Windows; preceding 10-test suite passed on Linux.
 - Actual API browser smoke and desktop/mobile render checks pass. Independent UI finish-review disposition: ship.
 - Docker build and non-root runtime verified. Confirmed booking and revision persist across a container restart with Postgres.
 - Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
@@ -30,3 +30,5 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 Black/charcoal and brass gold replace the white/blue world. SVG icons and favicon, self-hosted Manrope, service shortcuts, visible mobile navigation, and a dedicated appointments view are implemented. Appointment actions pass the selected reference through the same deterministic confirmation flow. Initial transcript scrolling remains local, and Type instead exposes the non-microphone path. Desktop/mobile real-Neon workflows and 16 frontend tests pass; the fresh finish-review disposition is ship. Revision `591f3f1` is pushed and automatically deployed by Render. Its new asset fingerprint and complete hosted browser workflow pass; the new UI is public.
 
 Test-drive playback/reveal: UI turns now speak outside microphone calls, late playback is generation-guarded, playback failures expose replay recovery, and new actual text has a bounded reduced-motion-safe word reveal. Runtime `aa1c645` is deployed; its fingerprint and hosted appointment/reveal/reduced-motion smoke pass. The candidate confirms audible one-shot replies and progressive text in desktop Chrome.
+
+Confirmed schedule updates: the card, list and count use the committed response immediately, independent of speech completion. A visible status identifies the modified booking. All 28 frontend tests and local desktop/mobile API workflows pass, including preservation before confirmation/on failed reschedule; deploy and verify this latest UI revision.

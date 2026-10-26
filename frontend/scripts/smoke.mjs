@@ -20,15 +20,15 @@ const context = await browser.newContext({
 const page = await context.newPage()
 page.on('pageerror', (error) => errors.push(error.message))
 
-async function send(text) {
-  await page.getByRole('textbox', { name: 'Type your message' }).fill(text)
-  const response = page.waitForResponse(
+async function send(text, target = page) {
+  await target.getByRole('textbox', { name: 'Type your message' }).fill(text)
+  const response = target.waitForResponse(
     (response) => response.url().endsWith('/api/turn') && response.request().method() === 'POST',
   )
-  await page.getByRole('button', { name: 'Send message', exact: true }).click()
+  await target.getByRole('button', { name: 'Send message', exact: true }).click()
   const result = await response
   expect(result.status()).toBe(200)
-  await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeDisabled()
+  await expect(target.getByRole('button', { name: 'Send message', exact: true })).toBeDisabled()
   return result.json()
 }
 
@@ -63,8 +63,18 @@ try {
   await send('Thursday at 3 PM')
   const moved = await send('yes')
   expect(moved.trace.action).toBe('rescheduled')
+  await expect(page.getByRole('status', { name: 'Schedule update' })).toContainText(
+    'Appointment rescheduled',
+  )
   await page.getByRole('link', { name: /Your appointments/ }).click()
   await expect(page.getByRole('article')).toHaveCount(2)
+  await expect(
+    page.getByRole('article').filter({ hasText: moved.state.appointment.reference }),
+  ).toContainText('3:00 PM')
+  await page.screenshot({
+    path: fileURLToPath(new URL('appointments-updated-desktop.png', root)),
+    fullPage: true,
+  })
   const cancelRequest = page.waitForResponse((response) => response.url().endsWith('/api/turn'))
   await page
     .getByRole('article')
@@ -75,6 +85,16 @@ try {
   await expect(page.getByRole('textbox', { name: 'Type your message' })).toBeVisible()
   const cancelled = await send('yes')
   expect(cancelled.trace.action).toBe('cancelled')
+  await expect(page.getByRole('status', { name: 'Schedule update' })).toContainText(
+    'Appointment cancelled',
+  )
+  await page.getByRole('button', { name: /View updated schedule/ }).click()
+  await expect(page.getByRole('article')).toHaveCount(1)
+  await expect(
+    page.getByRole('article').filter({ hasText: cancelled.state.appointment.reference }),
+  ).toHaveCount(0)
+  await expect(page.locator('.nav-count')).toHaveText('1')
+  await page.getByRole('link', { name: 'Reception', exact: true }).click()
   await page.getByRole('button', { name: /Reset demo/ }).click()
   const reset = page.waitForResponse((response) => response.url().endsWith('/api/session/reset'))
   await page.getByRole('button', { name: 'Reset Demo Session', exact: true }).click()
@@ -123,10 +143,28 @@ try {
   await phone.getByRole('button', { name: 'Reschedule', exact: true }).click()
   expect((await mobileRequest).status()).toBe(200)
   await expect(phone.getByRole('textbox', { name: 'Type your message' })).toBeVisible()
+  await send('Thursday at 3 PM', phone)
+  const mobileConfirmation = phone.waitForResponse((response) =>
+    response.url().endsWith('/api/turn'),
+  )
+  await phone.getByRole('button', { name: 'Confirm appointment', exact: true }).click()
+  expect((await mobileConfirmation).status()).toBe(200)
+  await expect(phone.getByRole('status', { name: 'Schedule update' })).toContainText(
+    'Appointment rescheduled',
+  )
+  await phone.getByRole('button', { name: /View updated schedule/ }).click()
+  await expect(phone.getByRole('article')).toContainText('3:00 PM')
+  await phone.screenshot({
+    path: fileURLToPath(new URL('appointments-updated-mobile.png', root)),
+    fullPage: true,
+  })
+  expect(
+    await phone.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).toBe(true)
   await mobile.close()
   expect(errors).toEqual([])
   console.log(
-    'PASS: booking, alternatives, selection, rescheduling, cancellation via appointments page, reset, quick replies, text reveal/reduced motion, desktop/mobile navigation and rendering; no page errors.',
+    'PASS: booking, alternatives, selection, instant confirmed reschedule/cancellation updates, reset, quick replies, text reveal/reduced motion, desktop/mobile navigation and rendering; no page errors.',
   )
 } finally {
   await context.close()
