@@ -15,9 +15,10 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 ## Progress
 
 - Repository, rules, environment, backend, interface, and assessment documentation implemented.
-- 98 pytest cases pass across SQLite and Postgres on Windows; preceding 94-test suite passed on Linux; last backend coverage 91%. Type/lint, frontend checks and 10 Vitest tests pass.
+- 100 pytest cases pass across SQLite and Postgres on Windows; preceding 98-test suite passed on Linux; backend coverage 91%. Type/lint, frontend checks and 10 Vitest tests pass on both OSes.
 - Actual API browser smoke and desktop/mobile render checks pass. Independent UI finish-review disposition: ship.
 - Docker build and non-root runtime verified. Confirmed booking and revision persist across a container restart with Postgres.
 - Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
-- Remaining: second microphone/cadence check, optional Groq live check, Neon setup, public deployment, final evidence refresh and submission.
+- Neon production branch linked/deployed and real API/database workflow verified. Required PR opened: https://github.com/savvpro/savvpro-test-voice-agent/pull/3.
+- Remaining: second microphone/cadence check, optional Groq live check, public Render deployment, final evidence refresh.
 - Hosting: original Render workspace suspended; Railway signup unavailable. Candidate is configuring an available Google-login Render account using the public candidate branch. GitHub-hosted Actions cannot start because of an account billing lock; equivalent Linux-container checks are recorded separately.

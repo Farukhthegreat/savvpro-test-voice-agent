@@ -67,7 +67,9 @@ def make_engine(url: str | None = None) -> Engine:
     sqlite = url.startswith("sqlite")
     engine = create_engine(
         url,
-        connect_args={"check_same_thread": False, "timeout": 5} if sqlite else {},
+        connect_args={"check_same_thread": False, "timeout": 5}
+        if sqlite
+        else {"connect_timeout": 10},
         pool_pre_ping=True,
     )
     if sqlite:

@@ -43,6 +43,8 @@ Quick-test buttons and typed input use the same decision endpoint as voice. Paus
 
 Copy `.env.example` to `.env` and edit locally. Do not commit it.
 
+Neon CLI users can run `neon init` and `neon deploy`: FastAPI also reads the generated `.env.local`. Both env files stay private, and hosted process environment variables take precedence. From the project root, `npm run build` is also supported. See [Neon setup and evidence](docs/NEON_SETUP.md).
+
 | Variable | Purpose |
 | --- | --- |
 | `DATABASE_URL` | Defaults to `sqlite:///./workshop.db`. Use a Neon Postgres connection string with TLS for hosted persistence. Postgres URLs are normalized to psycopg. |

@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=(".env.local", ".env"), extra="ignore")
     database_url: str = "sqlite:///./workshop.db"
     groq_api_key: SecretStr = SecretStr("")
     secure_cookies: bool = False

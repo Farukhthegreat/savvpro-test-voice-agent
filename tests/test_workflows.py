@@ -65,7 +65,7 @@ def test_spoken_number_selects_alternative_not_clock_time(client: TestClient) ->
     start(client)
     proposed = turn(client, "Book a brake inspection for my SUV tomorrow at 2 PM")
     alternative = proposed["state"]["alternatives"][1]
-    result = turn(client, "option two")
+    result = turn(client, "option two.")
     assert result["state"]["slots"]["time"] == alternative["time"]
     assert result["state"]["slots"]["date"] == alternative["date"]
 
