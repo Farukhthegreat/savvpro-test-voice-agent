@@ -8,7 +8,7 @@ Each browser gets an isolated, fictional two-bay workshop, occupied test slots, 
 
 ![Bayline reception running with a real seeded demo appointment](docs/images/reception-desktop.png)
 
-[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png) ? [Appointments page](docs/images/appointments-desktop.png)
+[Watch the silent workflow walkthrough](docs/images/demo-walkthrough.webm) · [Mobile view](docs/images/reception-mobile.png) ? [Appointments page](docs/images/appointments-desktop.png) ? [Confirmed update](docs/images/appointments-updated-desktop.png)
 
 ## Run locally
 
