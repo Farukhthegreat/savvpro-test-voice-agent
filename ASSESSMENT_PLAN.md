@@ -21,5 +21,6 @@ All core assessment requirements remain mandatory. No runtime LLM decisions, rea
 - Candidate's first Chrome check: correct recognition, audible replies, fast responses; requested voice/cadence improvements have been implemented and need rechecking.
 - Neon production branch linked/deployed and real API/database workflow verified. Required PR opened: https://github.com/savvpro/savvpro-test-voice-agent/pull/3.
 - Public Render app verified: https://savvpro-test-voice-agent.onrender.com. Hosted browser workflows and actual Neon records pass; HTTPS/session cookie checks pass.
-- Remaining: latest-commit redeploy confirmation, final hosted microphone/cadence check, optional Groq live check, final evidence refresh.
+- Latest runtime deployment 7b01b76 confirmed by candidate and public asset fingerprint; final hosted browser smoke passes.
+- Remaining human check: final hosted microphone/cadence preference. Optional Groq remains unconfigured and is not claimed as live-verified. Evidence and submission are updated.
 - Hosting: original Render workspace suspended; Railway signup unavailable. Candidate is configuring an available Google-login Render account using the public candidate branch. GitHub-hosted Actions cannot start because of an account billing lock; equivalent Linux-container checks are recorded separately.

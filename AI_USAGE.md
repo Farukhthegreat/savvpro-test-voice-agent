@@ -24,9 +24,17 @@ AI assistance was used throughout this assessment. **No language model participa
 
 ## Token evidence
 
+Reported model: `gpt-6.1-sol`. These are separate per-session snapshots; no combined aggregate is claimed. The JSON files record each cutoff timestamp.
+
+| Session | Input | Cached input (included) | Output | Total |
+| --- | ---: | ---: | ---: | ---: |
+| [Build/planning](docs/ai-usage/codex-token-counts.json) | 33,306,859 | 32,668,160 | 178,387 | 33,485,246 |
+| [UI finish review](docs/ai-usage/reviewer-token-counts.json) | 269,514 | 232,064 | 1,803 | 271,317 |
+| [Design documenter](docs/ai-usage/documenter-token-counts.json) | 436,021 | 396,928 | 9,336 | 445,357 |
+
 Sanitized, machine-reported token-count events are in [docs/ai-usage/codex-token-counts.json](docs/ai-usage/codex-token-counts.json). The file records its cutoff timestamp and latest cumulative totals. **Do not sum cumulative event totals.** Cached input is included within input tokens; it is not added again. These counters are tool-reported usage, not a bill or unique-text measure.
 
-The final assistant message and any work after the export cutoff are not included. Image-generation token usage is not exposed by the tool and is not estimated. Separate review/documentation sessions are identified as AI assistance; only counters actually available in exported evidence are claimed.
+The final assistant message and any work after the export cutoff are not included. Image-generation token usage is not exposed by the tool and is not estimated. Reviewer and documenter counters are exported separately. Do not add these to the build-session counter without verifying aggregation semantics; only the per-session measurements are claimed.
 
 Reproduce an export from an available local Codex JSONL log with:
 

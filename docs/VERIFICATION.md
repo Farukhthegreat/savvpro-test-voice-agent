@@ -24,4 +24,4 @@ Date: 26 October 2026 (PKT). Update this record from actual runs before submissi
 
 The installed Starlette TestClient emits a deprecation warning about httpx; it does not fail the test suite. Do not suppress or reinterpret unavailable live checks as passes.
 
-The first hosted check observed the dashboard's deployed revision fc6bd05. The Neon integration is in 801df03, and a subsequent fresh-call greeting fix is on the candidate branch. Deploy the latest commit; documentation-only evidence updates do not change the runtime. Final public voice quality and optional Groq live access are not implied by these automated checks.
+The final hosted browser smoke passed on the fresh-call greeting build (runtime commit 7b01b76), identified by frontend asset `index-Bgm5S7gI.js`; the candidate also confirmed the deployment passed. One repeat was interrupted by a local DNS lookup failure; DNS recovered and the retry passed. Subsequent documentation-only evidence updates do not change the runtime or require another deployment. Final public voice quality and optional Groq live access are not implied by automated checks.
